@@ -10,3 +10,5 @@ doc/app
 *.swp
 *-
 .DS_Store
+.idea
+.idea/*

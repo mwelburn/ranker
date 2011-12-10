@@ -5,9 +5,6 @@ gem 'rails', '3.1.1'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
-
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -28,9 +25,29 @@ gem 'jquery-rails'
 # gem 'capistrano'
 
 # To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
+
+gem 'devise', '1.4.5'
+gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git' , :tag => 'v0.3.0.rc3'
+gem 'oa-oauth', :require => 'omniauth/oauth'
+
+group :development do
+  gem 'sqlite3'
+  gem 'ruby-debug19', :require => 'ruby-debug'
+
+  gem 'rspec-rails'
+  gem 'faker'
+end
 
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
+
+  gem 'rspec'
+  gem 'webrat'
+  gem 'factory_girl_rails'
+end
+
+gem :production do
+  gem 'heroku'
+  gem 'pg'
 end
