@@ -1,7 +1,11 @@
 Ranker::Application.routes.draw do
   
+  devise_for :users
+  #TODO - pretty up the devise routes
+
   match '/about', :to => 'pages#about'
   match '/contact', :to => 'pages#contact'
+  match '/help', :to => 'pages#help'
   
   root :to => 'pages#home'
   

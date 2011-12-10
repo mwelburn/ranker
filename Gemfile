@@ -47,7 +47,7 @@ group :test do
   gem 'factory_girl_rails'
 end
 
-gem :production do
+group :production do
   gem 'heroku'
   gem 'pg'
 end
