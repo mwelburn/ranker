@@ -1,2 +1,17 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<% if user_signed_in? %>
+  <table class="front" summary="For signed-in users">
+    <tr>
+      <td class="main">
+        <%= render 'shared/problems' %>
+        <h1 class="problem">New Problem to solve?</h1>
+        <%= render 'shared/problem_form' %>
+      </td>
+    </tr>
+  </table>
+<% else %>
+  <h1>Ranker</h1>
+  <p>
+    This is the home page for Ranker.
+  </p>
+  <%= link_to "Sign up now!", new_user_registration_path, :class => "signup_button round" %>
+<% end %>

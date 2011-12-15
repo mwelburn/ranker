@@ -11,7 +11,50 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111210214302) do
+ActiveRecord::Schema.define(:version => 20111212020917) do
+
+  create_table "answers", :force => true do |t|
+    t.integer  "question_id"
+    t.integer  "solution_id"
+    t.integer  "rating"
+    t.string   "comment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "answers", ["question_id"], :name => "index_answers_on_question_id"
+
+  create_table "problems", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.string   "comment"
+    t.boolean  "public"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "problems", ["user_id"], :name => "index_problems_on_user_id"
+
+  create_table "questions", :force => true do |t|
+    t.integer  "problem_id"
+    t.string   "position"
+    t.string   "text"
+    t.integer  "weight"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "questions", ["problem_id"], :name => "index_questions_on_problem_id"
+
+  create_table "solutions", :force => true do |t|
+    t.integer  "problem_id"
+    t.string   "name"
+    t.string   "comment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "solutions", ["problem_id"], :name => "index_solutions_on_problem_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false

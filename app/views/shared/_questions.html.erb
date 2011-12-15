@@ -1,0 +1,5 @@
+<% unless @questions.empty? %>
+  <table class="questions" summary="Problem questions">
+	<%= render :partial => 'shared/question_item', :collection => @questions %>
+  </table>
+<% end %>

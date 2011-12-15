@@ -1,0 +1,24 @@
+<table class="problem" summary="Problem information">
+  <tr>
+	<td class="main">
+      <span>
+        Back to <%= link_to "Problems", root_path %>
+      </span>
+	  <h1>
+  		<%= @problem.name %>
+        <%= link_to "Edit Information", edit_problem_path(@problem) %>
+	  </h1>
+      <p>
+        <%= @problem.comment %>
+      </p>
+      <span>
+        <%= link_to "Edit questions", problem_questions_path(@problem) %>
+      </span>
+      <% unless @solutions.empty? %>
+        <%= render 'shared/solutions' %>
+	  <% end %>
+      <h1 class="problem">New Solution?</h1>
+        <%= render 'shared/solution_form' %>
+      </td>
+  </tr>
+</table>

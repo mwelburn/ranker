@@ -1,14 +1,22 @@
 Ranker::Application.routes.draw do
-  
-  devise_for :users
   #TODO - pretty up the devise routes
+  #TODO - need to add some GET member params so users can get problems, etc?
+  devise_for :users
+  
+  resources :problems, :except => [:index, :new]
+  resources :solutions, :except => [:index, :new]
+  resources :questions, :except => [:index, :new]
 
+  match '/problems/:id/questions', :to => 'problems#questions', :as => 'problem_questions'
   match '/about', :to => 'pages#about'
   match '/contact', :to => 'pages#contact'
   match '/help', :to => 'pages#help'
   
   root :to => 'pages#home'
-  
+
+  #handling people who give us invalid routes
+  match '*a', :to => 'pages#error'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -1,0 +1,14 @@
+<tr>
+  <td class="problem">
+	<span class="name">
+	  <%= link_to problem_item.name, problem_item %>
+	</span>
+    <!-- TODO - need to deal with wrapping long comments -->
+	<span class="comment"><%= problem_item.comment %></span>
+  </td>
+  <% if current_user?(problem_item.user) %>
+  <td>
+	<%= link_to "delete", problem_item, :method => :delete, :confirm => "You sure?", :title => problem_item.name %>
+  </td>
+  <% end %>
+</tr>
