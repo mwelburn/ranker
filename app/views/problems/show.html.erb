@@ -5,7 +5,7 @@
         Back to <%= link_to "Problems", root_path %>
       </span>
 	  <h1>
-  		<%= @problem.name %>
+  		<span id="name"><%= @problem.name %></span>
         <%= link_to "Edit Information", edit_problem_path(@problem) %>
 	  </h1>
       <p>
