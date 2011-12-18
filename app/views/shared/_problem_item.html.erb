@@ -8,7 +8,7 @@
   </td>
   <% if current_user?(problem_item.user) %>
   <td>
-	<%= link_to "delete", problem_item, :method => :delete, :confirm => "You sure?", :title => problem_item.name %>
+	<%= link_to "delete", problem_item, :method => :delete, :confirm => "You sure?", :title => "Delete #{problem_item.name}" %>
   </td>
   <% end %>
 </tr>

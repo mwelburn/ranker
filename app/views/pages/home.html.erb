@@ -2,9 +2,8 @@
   <table class="front" summary="For signed-in users">
     <tr>
       <td class="main">
+        <%= link_to "New Problem?", new_problem_path %>
         <%= render 'shared/problems' %>
-        <h1 class="problem">New Problem to solve?</h1>
-        <%= render 'shared/problem_form' %>
       </td>
     </tr>
   </table>

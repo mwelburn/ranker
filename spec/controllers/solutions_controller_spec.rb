@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe SolutionsController do
   render_views
-
+=begin
   describe "access control" do
 
     it "should deny access to 'create'" do
@@ -173,4 +173,5 @@ describe SolutionsController do
       response.should have_selector("title", :content => "Edit solution")
     end
   end
+=end
 end

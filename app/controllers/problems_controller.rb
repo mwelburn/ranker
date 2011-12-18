@@ -1,6 +1,16 @@
 class ProblemsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :authorized_user, :except => :create
+  before_filter :authorized_user, :except => [:index, :new, :create]
+
+  def index
+    @problems = current_user.problems.paginate(:page => params[:page])
+    @title = "All problems"
+  end
+
+  def new
+    @problem = current_user.problems.new
+    @title = "New problem"
+  end
 
   def create
     @problem = current_user.problems.build(params[:problem])
@@ -8,29 +18,26 @@ class ProblemsController < ApplicationController
       flash[:success] = "Problem created!"
       redirect_to @problem
     else
-      redirect_to root_path
-      #TODO - this should render the create path so you can fix errors
-      #render root_path
+      render :new
     end
   end
 
   def destroy
-    @problem.destroy
-    redirect_to root_path
+    @problem = current_user.problems.find_by_id(params[:id])
+    if @problem.destroy
+      redirect_to problems_path, :flash => { :success => "Problem deleted" }
+    else
+      redirect_to @problem, :flash => { :failure => "Error deleting problem"}
+    end
   end
 
   def show
-    @problem = Problem.find(params[:id])
-    # TODO - once we remove pagination, we need to figure out why "new" is adding an empty value to the array
-    @solutions = @problem.solutions.paginate(:page => params[:page])
-    @solution = @problem.solutions.new
-    # add questions and solutions
+    @problem = Problem.find_by_id(params[:id])
     @title = @problem.name
   end
 
   def edit
-    @problem = Problem.find(params[:id])
-    # add questions
+    @problem = Problem.find_by_id(params[:id])
     @title = "Edit problem"
   end
 
@@ -39,29 +46,19 @@ class ProblemsController < ApplicationController
       redirect_to @problem, :flash => { :success => "Problem updated." }
     else
       @title = "Edit problem"
-      render :edit
+      #this flash message never gets displayed
+      render :edit#, :flash => { :failure => "Error updating problem" }
     end
-  end
-
-  def questions
-    @problem = Problem.find(params[:id])
-    # TODO - once we remove pagination, we need to figure out why "new" is adding an empty value to the array
-    @questions = @problem.questions
-    # TODO - new or build? want to default weight to 1
-    @question = @problem.questions.build({:weight => 1})
-    @title = "Edit questions"
   end
 
   private
 
     def authorized_user
       begin
-        @problem = Problem.find(params[:id])
+        @problem = current_user.problems.find(params[:id])
       rescue
-        # TODO - should we redirect to page not found?
-        redirect_to root_path
-      else
-        redirect_to root_path unless current_user == (@problem.user)
+        flash[:failure] = "Problem does not exist"
+        redirect_to "pages#error"
       end
     end
 

@@ -4,7 +4,6 @@ class CreateProblems < ActiveRecord::Migration
       t.integer :user_id
       t.string :name
       t.string :comment
-      t.boolean :public
 
       t.timestamps
     end
