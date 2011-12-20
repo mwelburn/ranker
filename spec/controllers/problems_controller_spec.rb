@@ -5,6 +5,11 @@ describe ProblemsController do
 
   describe "access control" do
 
+    before(:each) do
+      @user = Factory(:user)
+      @problem = Factory(:problem, :user => @user)
+    end
+
     it "should deny access to 'index'" do
       get :index
       response.should redirect_to(new_user_session_path)
@@ -21,22 +26,22 @@ describe ProblemsController do
     end
 
     it "should deny access to 'destroy'" do
-      delete :destroy, :id => 1
+      delete :destroy, :id => @problem
       response.should redirect_to(new_user_session_path)
     end
 
     it "should deny access to 'show'" do
-      get :show, :id => 1
+      get :show, :id => @problem
       response.should redirect_to(new_user_session_path)
     end
 
     it "should deny access to 'edit'" do
-      get :edit, :id => 1
+      get :edit, :id => @problem
       response.should redirect_to(new_user_session_path)
     end
 
     it "should deny access to 'update'" do
-      put :update, :id => 1, :problem => { :name => "Updated Name" }
+      put :update, :id => @problem, :problem => { :name => "Updated Name" }
       response.should redirect_to(new_user_session_path)
     end
   end
@@ -45,12 +50,13 @@ describe ProblemsController do
 
     before(:each) do
       @user = test_sign_in(Factory(:user))
-      @other_user = Factory(:user, :email => Factory.next(:email))
 
       30.times do
         Factory(:problem, :user => @user,
                           :name => Factory.next(:name))
       end
+
+      @other_user = Factory(:user, :email => Factory.next(:email))
       @other_problem = Factory(:problem, :user => @other_user, :name => "Other problem")
     end
 
@@ -66,7 +72,7 @@ describe ProblemsController do
 
     it "should have an element for each user's problem" do
       get :index
-      @user.problems.paginate(:page => 1).each do |problem|
+      @user.problems.each do |problem|
         response.should have_selector('li', :content => problem.name)
       end
     end
@@ -74,25 +80,26 @@ describe ProblemsController do
     #this test requires the problem's not have the same name
     it "should not contain other user's problems" do
       get :index
-      @other_user.problems.paginate(:page => 2).each do |problem|
+      @other_user.problems.each do |problem|
         response.should_not have_selector('li', :content => problem.name)
       end
     end
-=begin
+
     #TODO - find a pagination gem that works in 3.1
     it "should paginate problems" do
-      get :index
-      response.should have_selector('div.pagination')
-      response.should have_selector('span.disabled', :content => "Previous")
-      response.should have_selector('a', :href => "/problems?page=2",
-                                         :content => "2")
-      response.should have_selector('a', :href => "/problems?page=2",
-                                         :content => "Next")
+      pending
+#      get :index
+#      response.should have_selector('div.pagination')
+#      response.should have_selector('span.disabled', :content => "Previous")
+#      response.should have_selector('a', :href => "/problems?page=2",
+#                                         :content => "2")
+#      response.should have_selector('a', :href => "/problems?page=2",
+#                                         :content => "Next")
     end
-=end
+
     it "should have delete links" do
       get :index
-      @user.problems.paginate(:page => 1).each do |problem|
+      @user.problems.each do |problem|
         response.should have_selector('a', :href => problem_path(problem),
                                            :content => "delete")
       end
@@ -245,28 +252,25 @@ describe ProblemsController do
 
   describe "GET 'show'" do
 
+    before(:each) do
+      @user = Factory(:user)
+      @problem = Factory(:problem, :user => @user)
+    end
+
     describe "for an unauthorized user" do
 
       before(:each) do
-        @user = Factory(:user)
-        @problem = Factory(:problem, :user => @user)
         invalid_user = Factory(:user, :email => Factory.next(:email))
         test_sign_in(invalid_user)
       end
 
       it "should deny access" do
-        delete :destroy, :id => @problem
+          get :show, :id => @problem
         response.should redirect_to("pages#error")
       end
 
-      it "should not destroy the problem" do
-        lambda do
-          delete :destroy, :id => @problem
-        end.should_not change(Problem, :count)
-      end
-
       it "should have a flash message" do
-        delete :destroy, :id => @problem
+          get :show, :id => @problem
         flash[:failure].should =~ /problem does not exist/i
       end
     end
@@ -274,8 +278,7 @@ describe ProblemsController do
     describe "for an authorized user" do
 
       before(:each) do
-        @user = test_sign_in(Factory(:user))
-        @problem = Factory(:problem, :user => @user)
+        test_sign_in(@user)
       end
 
       describe "success" do
@@ -298,6 +301,11 @@ describe ProblemsController do
         it "should have a link to the problems page" do
           get :show, :id => @problem
           response.should have_selector("a", :content => "Problems")
+        end
+
+        it "should have a link to the edit page" do
+          get :show, :id => @problem
+          response.should have_selector("a", :content => "Edit Problem")
         end
 
         it "should have the problem's name'" do
@@ -323,11 +331,14 @@ describe ProblemsController do
 
   describe "GET 'edit'" do
 
+    before(:each) do
+      @user = Factory(:user)
+      @problem = Factory(:problem, :user => @user)
+    end
+
     describe "for an unauthorized user" do
 
       before(:each) do
-        @user = Factory(:user)
-        @problem = Factory(:problem, :user => @user)
         invalid_user = Factory(:user, :email => Factory.next(:email))
         test_sign_in(invalid_user)
       end
@@ -346,8 +357,7 @@ describe ProblemsController do
     describe "for an authorized user" do
 
       before(:each) do
-        @user = test_sign_in(Factory(:user))
-        @problem = Factory(:problem, :user => @user)
+        test_sign_in(@user)
       end
 
       describe "success" do
@@ -383,6 +393,8 @@ describe ProblemsController do
   describe "PUT 'update'" do
 
     before(:each) do
+      @user = Factory(:user)
+      @problem = Factory(:problem, :user => @user)
       @attr = {
           :name => "Updated Problem Name",
           :comment => "Updated comment"
@@ -392,8 +404,6 @@ describe ProblemsController do
     describe "for an unauthorized user" do
 
       before(:each) do
-        @user = Factory(:user)
-        @problem = Factory(:problem, :user => @user)
         invalid_user = Factory(:user, :email => Factory.next(:email))
         test_sign_in(invalid_user)
       end
@@ -419,8 +429,7 @@ describe ProblemsController do
     describe "for an authorized user" do
 
       before(:each) do
-        @user = test_sign_in(Factory(:user))
-        @problem = Factory(:problem, :user => @user)
+        test_sign_in(@user)
       end
 
       describe "success" do
@@ -451,12 +460,13 @@ describe ProblemsController do
               :comment => "" #comment can be blank, but name cannot
           }
         end
-=begin
+
         it "should have a flash message" do
-          put :update, :id => @problem, :problem => @bad_attr
-          flash[:failure].should =~ /error updating problem/i
+          pending
+#          put :update, :id => @problem, :problem => @bad_attr
+#          flash[:failure].should =~ /error updating problem/i
         end
-=end
+
         it "should render the problem page" do
           put :update, :id => @problem, :problem => @bad_attr
           response.should render_template("problems/edit")

@@ -1,22 +1,41 @@
 class QuestionsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :authorized_user, :except => :create
+  before_filter :load_problem, :only => [:index, :new, :create]
+  before_filter :load_question, :except => [:index, :new, :create]
+
+  def index
+    @questions = @problem.questions
+    @title = "All questions"
+  end
+
+  def new
+    @question = @problem.questions.new
+    @title = "New question"
+  end
 
   def create
-    # TODO - how to figure out what problem this goes with
-    @problem = Problem.find_by_id(params[:question].problem_id)
     @question = @problem.questions.build(params[:question])
     if @question.save
-      flash[:success] = "Question created!"
-      redirect_to problem_questions_path(@problem)
+      redirect_to @question, :flash => { :success => "Question created!" }
     else
-      render @problem
+      render :new
     end
   end
 
   def destroy
-    @question.destroy
-    redirect_to problem_questions_path(@problem)
+    if @question.destroy
+      redirect_to problem_questions_path(@problem), :flash => { :success => "Question deleted" }
+    else
+      redirect_to @question, :flash => { :failure => "Error deleting question"}
+    end
+  end
+
+  def show
+    @title = @question.text
+  end
+
+  def edit
+    @title = "Edit question"
   end
 
   def update
@@ -30,14 +49,26 @@ class QuestionsController < ApplicationController
 
   private
 
-    def authorized_user
+    def load_problem
       begin
-        @question = Question.find(params[:id])
+        @problem = current_user.problems.find(params[:problem_id])
       rescue
-        # TODO - should we redirect to page not found?
-        redirect_to root_path
-      else
-        redirect_to root_path unless current_user == (@question.problem.user)
+        redirect_to error_path, :flash => { :failure => "Problem does not exist" }
+      end
+    end
+
+    def load_question
+      begin
+        if @problem.nil?
+          if @question = Question.find(params[:id])
+            @problem = @question.problem
+            redirect_to error_path, :flash => { :failure => "Question does not exist" } unless @problem.user_id == current_user.id
+          end
+        else
+          @question = @problem.questions.find(params[:id])
+        end
+      rescue
+        redirect_to error_path, :flash => { :failure => "Question does not exist" }
       end
     end
 

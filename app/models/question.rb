@@ -1,6 +1,6 @@
 class Question < ActiveRecord::Base
   attr_accessible :text, :weight, :position
-  before_save :default_values
+  before_validation :default_values
 
   belongs_to :problem
   has_many :answers, :dependent => :destroy
@@ -11,6 +11,7 @@ class Question < ActiveRecord::Base
                                           :message => "is not a non-negative integer",
                                           :only_integer => true
                                         }
+                       :default 
   validates :weight, :numericality => { :greater_than => 0,
                                         :less_than => 6,
                                         :message => "is not an integer between 1 and 5",
@@ -24,5 +25,7 @@ class Question < ActiveRecord::Base
 
     def default_values
       self.weight = 1 unless self.weight
+      # TODO - set position to 1 higher than the highest position of this problem's questions
+      self.position = 0 unless self.position
     end
 end

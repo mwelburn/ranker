@@ -1,0 +1,8 @@
+<li>
+  <%= link_to question.text, question %>
+  <span class="weight">
+    <%= question.weight %>
+  </span>
+  <%= link_to "delete", question, :method => :delete, :confirm => "You sure?",
+                              :title => "Delete #{question.text}" %>
+</li>

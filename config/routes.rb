@@ -1,11 +1,16 @@
 Ranker::Application.routes.draw do
   devise_for :users
   
-  resources :problems
-#  resources :solutions, :except => [:index, :new]
-#  resources :questions, :except => [:index, :new]
+  resources :problems do
+    resources :questions, :only => [ :index, :new, :create ]
+    resources :solutions, :only => [ :index, :new, :create ]
+  end
+  resources :solutions, :except => [ :index, :new, :create ] do
+    resources :answers, :only => [ :index, :new, :create ]
+  end
+  resources :questions, :except => [ :index, :new, :create ]
+  resources :answers, :except => [ :index, :new, :create ]
 
-#  match '/problems/:id/questions', :to => 'problems#questions', :as => 'problem_questions'
   match '/about', :to => 'pages#about'
   match '/contact', :to => 'pages#contact'
   match '/help', :to => 'pages#help'

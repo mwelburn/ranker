@@ -1,9 +1,9 @@
 class ProblemsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :authorized_user, :except => [:index, :new, :create]
+  before_filter :load_problem, :except => [:index, :new, :create]
 
   def index
-    @problems = current_user.problems.paginate(:page => params[:page])
+    @problems = current_user.problems
     @title = "All problems"
   end
 
@@ -15,15 +15,13 @@ class ProblemsController < ApplicationController
   def create
     @problem = current_user.problems.build(params[:problem])
     if @problem.save
-      flash[:success] = "Problem created!"
-      redirect_to @problem
+      redirect_to @problem, :flash => { :success => "Problem created!" }
     else
       render :new
     end
   end
 
   def destroy
-    @problem = current_user.problems.find_by_id(params[:id])
     if @problem.destroy
       redirect_to problems_path, :flash => { :success => "Problem deleted" }
     else
@@ -32,12 +30,10 @@ class ProblemsController < ApplicationController
   end
 
   def show
-    @problem = Problem.find_by_id(params[:id])
     @title = @problem.name
   end
 
   def edit
-    @problem = Problem.find_by_id(params[:id])
     @title = "Edit problem"
   end
 
@@ -46,19 +42,17 @@ class ProblemsController < ApplicationController
       redirect_to @problem, :flash => { :success => "Problem updated." }
     else
       @title = "Edit problem"
-      #this flash message never gets displayed
-      render :edit#, :flash => { :failure => "Error updating problem" }
+      render :edit
     end
   end
 
   private
 
-    def authorized_user
+    def load_problem
       begin
         @problem = current_user.problems.find(params[:id])
       rescue
-        flash[:failure] = "Problem does not exist"
-        redirect_to "pages#error"
+        redirect_to error_path, :flash => { :failure => "Problem does not exist"}
       end
     end
 

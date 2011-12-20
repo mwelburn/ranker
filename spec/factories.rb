@@ -14,6 +14,10 @@ Factory.sequence :name do |n|
   "Test Name #{n}"
 end
 
+Factory.sequence :text do |n|
+  "Test Text #{n}"
+end
+
 Factory.define :problem do |problem|
   problem.name "Foo bar"
   problem.comment "Comment"

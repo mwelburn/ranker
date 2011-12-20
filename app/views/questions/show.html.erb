@@ -1,0 +1,15 @@
+<table class="question" summary="Question information">
+  <tr>
+	<td class="main">
+      <span>
+        Back to <%= link_to "Questions", problem_questions_path(@problem) %>
+      </span>
+	  <h1>
+  		<span id="text"><%= @question.text %></span>
+        <%= link_to "Edit Question", edit_question_path(@question) %>
+	  </h1>
+      <p>
+        <%= @question.weight %>
+      </p>
+  </tr>
+</table>

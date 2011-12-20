@@ -1,0 +1,17 @@
+<h1>Edit question</h1>
+<%= form_for @question do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  <div class="field">
+    <%= f.label :text %><br/>
+	<%= f.text_field :text %>
+  </div>
+  <div class="field">
+    <!-- TODO - want to add (1 to 5) here -->
+    <%= f.label :weight %><br/>
+	<%= f.text_field :weight, { :maxlength => 1 } %>
+  </div>
+    <%= f.hidden_field :problem_id, :value => @problem.id %>
+  <div class="actions">
+	<%= f.submit "Submit" %>
+  </div>
+<% end %>
