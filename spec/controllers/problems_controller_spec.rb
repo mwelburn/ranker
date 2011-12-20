@@ -198,7 +198,7 @@ describe ProblemsController do
 
       it "should deny access" do
         delete :destroy, :id => @problem
-        response.should redirect_to("pages#error")
+        response.should redirect_to(error_path)
       end
 
       it "should not destroy the problem" do
@@ -244,7 +244,7 @@ describe ProblemsController do
 
         it "should render an error page when trying to access an invalid problem" do
           get :edit, :id => 1000
-          response.should redirect_to("pages#error")
+          response.should redirect_to(error_path)
         end
       end
     end
@@ -266,7 +266,7 @@ describe ProblemsController do
 
       it "should deny access" do
           get :show, :id => @problem
-        response.should redirect_to("pages#error")
+        response.should redirect_to(error_path)
       end
 
       it "should have a flash message" do
@@ -298,7 +298,7 @@ describe ProblemsController do
           response.should have_selector("title", :content => @problem.name)
         end
 
-        it "should have a link to the problems page" do
+        it "should have a link to the problem's page" do
           get :show, :id => @problem
           response.should have_selector("a", :content => "Problems")
         end
@@ -317,13 +317,18 @@ describe ProblemsController do
           get :show, :id => @problem
           response.should have_selector("p", :content => @problem.comment)
         end
+
+        it "should have a link to the questions page" do
+          get :show, :id => @problem
+          response.should have_selector("a", :content => "View Questions")
+        end
       end
 
       describe "failure" do
 
         it "should render an error page when trying to access an invalid problem" do
           get :show, :id => 1000
-          response.should redirect_to("pages#error")
+          response.should redirect_to(error_path)
         end
       end
     end
@@ -345,7 +350,7 @@ describe ProblemsController do
 
       it "should deny access" do
         get :edit, :id => @problem
-        response.should redirect_to("pages#error")
+        response.should redirect_to(error_path)
       end
 
       it "should have a flash message" do
@@ -384,7 +389,7 @@ describe ProblemsController do
 
         it "should render an error page when trying to access an invalid problem" do
           get :edit, :id => 1000
-          response.should redirect_to("pages#error")
+          response.should redirect_to(error_path)
         end
       end
     end
@@ -410,7 +415,7 @@ describe ProblemsController do
 
       it "should deny access" do
         put :update, :id => @problem, :problem => @attr
-        response.should redirect_to("pages#error")
+        response.should redirect_to(error_path)
       end
 
       it "should not edit the problem" do
@@ -481,7 +486,7 @@ describe ProblemsController do
 
         it "should render an error page when trying to access an invalid problem" do
           put :update, :id => 1000, :problem => @attr
-          response.should redirect_to("pages#error")
+          response.should redirect_to(error_path)
         end
       end
     end

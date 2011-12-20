@@ -31,6 +31,7 @@ class ProblemsController < ApplicationController
 
   def show
     @title = @problem.name
+    @questions = @problem.questions
   end
 
   def edit
