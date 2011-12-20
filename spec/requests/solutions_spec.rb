@@ -34,7 +34,8 @@ describe "Solutions" do
           fill_in :solution_name, :with => name
           fill_in :solution_comment, :with => comment
           click_button
-          response.should have_selector("span.name", :solution_name => name)
+          response.should render_template("solutions/show")
+          response.should have_selector("span#name", :content => name)
         end.should change(Solution, :count).by(1)
       end
     end
