@@ -42,7 +42,7 @@ describe QuestionsController do
     end
 
     it "should deny access to 'update'" do
-      put :update, :id => @question, :question => { :text => "Updated Name" }
+      put :update, :id => @question, :question => { :text => "Updated Text" }
       response.should redirect_to(new_user_session_path)
     end
   end
@@ -81,7 +81,7 @@ describe QuestionsController do
       end
     end
 
-    #this test requires the question's not have the same name
+    #this test requires the question's not have the same text
     it "should not contain other problem's question" do
       get :index, :problem_id => @problem.id
       @other_problem.questions.each do |question|
@@ -95,9 +95,9 @@ describe QuestionsController do
 #      get :index, :problem_id => @problem.id
 #      response.should have_selector('div.pagination')
 #      response.should have_selector('span.disabled', :content => "Previous")
-#      response.should have_selector('a', :href => "/problems?page=2",
+#      response.should have_selector('a', :href => "/questions?page=2",
 #                                         :content => "2")
-#      response.should have_selector('a', :href => "/problems?page=2",
+#      response.should have_selector('a', :href => "/questions?page=2",
 #                                         :content => "Next")
     end
 
@@ -333,7 +333,7 @@ describe QuestionsController do
 
         it "should include the question's weight" do
           get :show, :id => @question
-          response.should have_selector("p", :content => @question.weight)
+          response.should have_selector("span", :content => @question.weight)
         end
       end
 
@@ -484,7 +484,7 @@ describe QuestionsController do
         it "should have a flash message" do
           pending
 #          put :update, :id => @question, :question => @bad_attr
-#          flash[:failure].should =~ /error updating problem/i
+#          flash[:failure].should =~ /error updating question/i
         end
 
         it "should render the question page" do

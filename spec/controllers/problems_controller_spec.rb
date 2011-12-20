@@ -315,7 +315,7 @@ describe ProblemsController do
 
         it "should include the problem's comment" do
           get :show, :id => @problem
-          response.should have_selector("p", :content => @problem.comment)
+          response.should have_selector("span", :content => @problem.comment)
         end
 
         it "should have a link to the questions page" do

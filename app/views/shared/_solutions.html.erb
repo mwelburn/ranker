@@ -1,6 +1,5 @@
 <% unless @solutions.empty? %>
-  <table class="solutions" summary="User solutions">
+  <table class="solutions" summary="Problem solutions">
 	<%= render :partial => 'shared/solution_item', :collection => @solutions %>
   </table>
-  <%= will_paginate @solutions %>
 <% end %>

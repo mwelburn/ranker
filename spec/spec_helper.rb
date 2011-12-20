@@ -45,10 +45,9 @@ RSpec.configure do |config|
   end
 
   def integration_create_problem(problem)
-    visit root_path
+    visit new_problem_path
     fill_in :problem_name, :with => problem.name
     fill_in :problem_comment, :with => problem.comment
-    fill_in :problem_public, :with => problem.public
     click_button
   end
 end

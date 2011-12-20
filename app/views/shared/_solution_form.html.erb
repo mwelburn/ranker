@@ -1,16 +1,1 @@
-<%= form_for @solution do |f| %>
-  <%= render 'shared/error_messages', :object => f.object %>
-  <div class="field">
-    <%= f.label :name %><br/>
-	<%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :comment %><br/>
-	<%= f.text_area :comment %>
-  </div>
-  <!-- TODO - only display hidden field on new, not update -->
-  <%= f.hidden_field :problem_id, :value => @problem %>
-  <div class="actions">
-	<%= f.submit "Submit" %>
-  </div>
-<% end %>
+<!-- TODO - this file should have some hybrid of the new/edit solution erb files one day -->

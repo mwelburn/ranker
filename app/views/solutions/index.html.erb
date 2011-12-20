@@ -1,0 +1,10 @@
+<h1>All solutions</h1>
+
+<span>
+  Back to <%= link_to "problem", @problem %>
+</span>
+<%= link_to "New Solution?", new_problem_solution_path(@problem) %>
+
+<ul class="solutions">
+  <%= render @solutions %>
+</ul>

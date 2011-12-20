@@ -11,8 +11,9 @@
         <%= link_to "Edit Problem", edit_problem_path(@problem) %>
         <%= link_to "View Questions", problem_questions_path(@problem) %>
       </p>
-      <p>
+      <span class="comment">
         <%= @problem.comment %>
-      </p>
+      </span>
+      <!-- TODO - show solutions with ranks -->
   </tr>
 </table>

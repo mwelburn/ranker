@@ -1,5 +1,5 @@
-<h1>Edit solution</h1>
-<%= form_for @solution do |f| %>
+<h1>New solution</h1>
+<%= form_for [@problem, @solution] do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
   <div class="field">
     <%= f.label :name %><br/>
@@ -9,7 +9,6 @@
     <%= f.label :comment %><br/>
 	<%= f.text_field :comment %>
   </div>
-    <%= f.hidden_field :problem_id, :value => @problem.id %>
   <div class="actions">
 	<%= f.submit "Submit" %>
   </div>

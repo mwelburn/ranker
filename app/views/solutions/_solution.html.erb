@@ -1,0 +1,11 @@
+<li>
+  <span class="ranking">
+    <%= solution.ranking %>
+  </span>
+  <%= link_to solution.name, solution %>
+  <span class="comment">
+    <%= solution.comment %>
+  </span>
+  <%= link_to "delete", solution, :method => :delete, :confirm => "You sure?",
+                              :title => "Delete #{solution.name}" %>
+</li>

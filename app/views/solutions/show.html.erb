@@ -1,18 +1,18 @@
-<table class="problem" summary="Problem information">
+<table class="solution" summary="Solution information">
   <tr>
 	<td class="main">
       <span>
-        Back to <%= link_to @problem.name, @problem %>
+        Back to <%= link_to "Solutions", problem_solutions_path(@problem) %>
+      </span>
+      <span class="ranking">
+        <%= @solution.ranking %>
       </span>
 	  <h1>
-        <%= @solution.ranking %>
-  		<%= @solution.name %>
-        <%= link_to "Edit Information", edit_solution_path(@solution) %>
+  		<span id="text"><%= @solution.name %></span>
+        <%= link_to "Edit Solution", edit_solution_path(@solution) %>
 	  </h1>
-      <p>
+      <span class="comment">
         <%= @solution.comment %>
-      </p>
-<!-- TODO - add this when questions are implemented -->
-    </td>
+      </span>
   </tr>
 </table>

@@ -1,42 +1,44 @@
 class SolutionsController < ApplicationController
-  before_filter :authenticate_user!, :only => [:create, :destroy, :show, :edit]
-  before_filter :authorized_user, :only => [:destroy, :show, :edit]
+  before_filter :authenticate_user!
+  before_filter :load_problem, :only => [:index, :new, :create]
+  before_filter :load_solution, :except => [:index, :new, :create]
+
+  def index
+    @solutions = @problem.solutions
+    @title = "All solutions"
+  end
+
+  def new
+    @solution = @problem.solutions.new
+    @title = "New solution"
+  end
 
   def create
-    puts params[:solution][:problem_id]
-    # TODO - how to figure out what problem this goes with
-    @problem = Problem.find_by_id(params[:solution][:problem_id])
     @solution = @problem.solutions.build(params[:solution])
     if @solution.save
-      flash[:success] = "Solution created!"
-      redirect_to @solution
+      redirect_to @solution, :flash => { :success => "Solution created!" }
     else
-      @title = @problem.name
-      @solutions = @problem.solutions
-      render @problem
+      render :new
     end
   end
 
   def destroy
-    @solution.destroy
-    redirect_to @problem
+    if @solution.destroy
+      redirect_to problem_solutions_path(@problem), :flash => { :success => "Solution deleted" }
+    else
+      redirect_to @solution, :flash => { :failure => "Error deleting solution"}
+    end
   end
 
   def show
-    @solution = Solution.find(params[:id])
-    @problem = @solution.problem
-    # add questions and answers
     @title = @solution.name
   end
 
   def edit
-    @solution = Solution.find(params[:id])
-    # add answers
     @title = "Edit solution"
   end
 
   def update
-    @solution = Solution.find(params[:id])
     if @solution.update_attributes(params[:solution])
       redirect_to @solution, :flash => { :success => "Solution updated." }
     else
@@ -47,14 +49,26 @@ class SolutionsController < ApplicationController
 
   private
 
-    def authorized_user
+    def load_problem
       begin
-        @solution = Solution.find(params[:id])
+        @problem = current_user.problems.find(params[:problem_id])
       rescue
-        # TODO - should we redirect to page not found?
-        redirect_to root_path
-      else
-        redirect_to root_path unless current_user == (@solution.problem.user)
+        redirect_to error_path, :flash => { :failure => "Problem does not exist" }
+      end
+    end
+
+    def load_solution
+      begin
+        if @problem.nil?
+          if @solution = Solution.find(params[:id])
+            @problem = @solution.problem
+            redirect_to error_path, :flash => { :failure => "Solution does not exist" } unless @problem.user_id == current_user.id
+          end
+        else
+          @solution = @problem.solutions.find(params[:id])
+        end
+      rescue
+        redirect_to error_path, :flash => { :failure => "Solution does not exist" }
       end
     end
 
