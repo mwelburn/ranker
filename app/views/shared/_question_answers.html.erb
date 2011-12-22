@@ -1,0 +1,15 @@
+<ul class="answers">
+  <%= form_for :answer, :url => {:action => 'answers'}, :method => :put do |f| %>
+    <% unless @answers.nil? %>
+      <% @answers.each do |answer| %>
+        <%= fields_for "answer[]", answer do |builder| %>
+          <%= render 'shared/error_messages', :object => builder.object %>
+          <%= render "shared/answer_fields", :f => builder, :answer => answer %>
+        <% end %>
+      <% end %>
+    <% end %>
+    <div class="actions">
+      <%= f.submit "Submit" %>
+    </div>
+  <% end %>
+</ul>

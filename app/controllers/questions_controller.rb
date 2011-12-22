@@ -60,10 +60,9 @@ class QuestionsController < ApplicationController
     def load_question
       begin
         if @problem.nil?
-          if @question = Question.find(params[:id])
-            @problem = @question.problem
-            redirect_to error_path, :flash => { :failure => "Question does not exist" } unless @problem.user_id == current_user.id
-          end
+          @question = Question.find(params[:id])
+          @problem = @question.problem
+          redirect_to error_path, :flash => { :failure => "Question does not exist" } unless @problem.user_id == current_user.id
         else
           @question = @problem.questions.find(params[:id])
         end

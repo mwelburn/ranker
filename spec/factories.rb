@@ -18,6 +18,10 @@ Factory.sequence :text do |n|
   "Test Text #{n}"
 end
 
+Factory.sequence :comment do |n|
+  "Test Comment #{n}"
+end
+
 Factory.define :problem do |problem|
   problem.name "Foo bar"
   problem.comment "Comment"

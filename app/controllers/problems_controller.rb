@@ -32,6 +32,9 @@ class ProblemsController < ApplicationController
   def show
     @title = @problem.name
     @questions = @problem.questions
+    #TODO- reverse the sort order so it is DESC
+    #TODO- put INC at the end
+    @solutions = @problem.solutions.sort_by {|solution| solution.ranking}
   end
 
   def edit

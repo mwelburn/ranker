@@ -6,10 +6,13 @@ Ranker::Application.routes.draw do
     resources :solutions, :only => [ :index, :new, :create ]
   end
   resources :solutions, :except => [ :index, :new, :create ] do
-    resources :answers, :only => [ :index, :new, :create ]
+    member do
+      put 'answers'
+    end
+    resources :answers, :only => [ :create ]
   end
   resources :questions, :except => [ :index, :new, :create ]
-  resources :answers, :except => [ :index, :new, :create ]
+  resources :answers, :only => [ :update ]
 
   match '/about', :to => 'pages#about'
   match '/contact', :to => 'pages#contact'

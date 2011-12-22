@@ -4,7 +4,9 @@ class SolutionsController < ApplicationController
   before_filter :load_solution, :except => [:index, :new, :create]
 
   def index
-    @solutions = @problem.solutions
+    #TODO- reverse the sort order so it is DESC
+    #TODO- put INC at the end
+    @solutions = @problem.solutions.sort_by {|solution| solution.ranking}
     @title = "All solutions"
   end
 
@@ -32,6 +34,18 @@ class SolutionsController < ApplicationController
 
   def show
     @title = @solution.name
+
+    @questions = @solution.problem.questions
+
+    unless @questions.nil?
+      @questions.each do |question|
+        unless @solution.answers.find_by_question_id(question.id)
+          @solution.answers.create!(:question_id => question.id)
+        end
+      end
+    end
+
+    @answers = @solution.answers.sort_by {|answer| answer.question.position}
   end
 
   def edit
@@ -47,6 +61,35 @@ class SolutionsController < ApplicationController
     end
   end
 
+  def answers
+    Answer.update(params[:answer].keys, params[:answer].values)
+    redirect_to @solution, :flash => { :success => "Answers updated." }
+    #TODO - need to handle failures due to validation -- wrap this in a transaction?? needs to give user feedback via the error flash message
+
+    #TODO - need to verify the user actually has access to the answers...they should if solution is validated
+    #TODO - do a check incase new answers are added, do they respect validation (can't have 2 answers to a problem, etc)
+    
+    #answers = params[:answer]
+    #
+    #unless answers.nil?
+    #  answers.each do |answer|
+    #    @solution = Solution.find_by_id(answer.solution_id)
+    #  end
+    #end
+    #
+    #if @solution.answers do |answer|
+    #  #figure out how to set each answer
+    #  #answer.find_by_id.update_attributes(params[:answer])
+    #end
+    #  redirect_to @solution, :flash => { :success => "Answer updated." }
+    #else
+    #  @title = "All answers"
+    #  render @solution
+    #end
+
+#ensure there is a client side "clear" that just sets rating/comment to blank and update accepts those values
+  end
+
   private
 
     def load_problem
@@ -60,10 +103,9 @@ class SolutionsController < ApplicationController
     def load_solution
       begin
         if @problem.nil?
-          if @solution = Solution.find(params[:id])
-            @problem = @solution.problem
-            redirect_to error_path, :flash => { :failure => "Solution does not exist" } unless @problem.user_id == current_user.id
-          end
+          @solution = Solution.find(params[:id])
+          @problem = @solution.problem
+          redirect_to error_path, :flash => { :failure => "Solution does not exist" } unless @problem.user_id == current_user.id
         else
           @solution = @problem.solutions.find(params[:id])
         end

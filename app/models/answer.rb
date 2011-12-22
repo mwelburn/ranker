@@ -8,9 +8,11 @@ class Answer < ActiveRecord::Base
                                         :less_than => 6,
                                         :message => "is not an integer between 1 and 5",
                                         :only_integer => true
-                                      }
+                                      },
+                     :allow_nil => true
   validates :question_id, :presence => true
   validates :solution_id, :presence => true
 
-  default_scope :order => 'answers.created_at DESC'
+  default_scope :order => 'answers.created_at ASC'
+
 end

@@ -14,6 +14,7 @@
       <span class="comment">
         <%= @problem.comment %>
       </span>
-      <!-- TODO - show solutions with ranks -->
+      <%= render "shared/solutions" %>
+      <%= link_to "New Solution", new_problem_solution_path(@problem) %>
   </tr>
 </table>

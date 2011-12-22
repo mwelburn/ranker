@@ -3,6 +3,7 @@ class Solution < ActiveRecord::Base
 
   belongs_to :problem
   has_many :answers, :dependent => :destroy
+  accepts_nested_attributes_for :answers, :allow_destroy => true
 
   validates :name, :presence => true,
                    :length => { :maximum => 75 }
