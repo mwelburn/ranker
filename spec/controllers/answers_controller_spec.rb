@@ -13,11 +13,6 @@ describe AnswersController do
       @answer = Factory(:answer, :solution => @solution, :question => @question)
     end
 
-    it "should deny access to 'index'" do
-      get :index, :question_id => @question.id, :solution_id => @solution.id
-      response.should redirect_to(new_user_session_path)
-    end
-
     it "should deny access to 'create'" do
       post :create, :question_id => @question.id, :solution_id => @solution.id
       response.should redirect_to(new_user_session_path)
@@ -26,93 +21,6 @@ describe AnswersController do
     it "should deny access to 'update'" do
       put :update, :id => @answer, :answer => { :rating => 1 }
       response.should redirect_to(new_user_session_path)
-    end
-  end
-
-  describe "GET 'index'" do
-
-    before(:each) do
-      @user = test_sign_in(Factory(:user))
-      @problem = Factory(:problem, :user => @user)
-      @solution = Factory(:solution, :problem => @problem)
-
-      30.times do
-        question = Factory(:question, :problem => @problem, :text => Factory.next(:name))
-        Factory(:answer, :solution => @solution, :question => question,
-                         :rating => 1, :comment => Factory.next(:comment))
-      end
-      @question = @problem.questions.first
-
-      @other_problem = Factory(:problem, :user => @user, :name => "Other problem")
-      @other_solution = Factory(:solution, :problem => @other_problem, :name => "Other problem's solution")
-      @other_question = Factory(:question, :problem => @other_problem, :text => "Other problem's text'")
-      @other_answer = Factory(:answer, :solution => @other_solution, :question => @other_question,
-                              :rating => 5, :comment => "Other answer's comment")
-    end
-
-    it "should be successful" do
-      get :index, :solution_id => @solution.id
-      response.should be_success
-    end
-
-    it "should have the right title" do
-      get :index, :solution_id => @solution.id
-      response.should have_selector('title', :content => "All answers")
-    end
-
-    it "should have an element for each problem's question" do
-      get :index, :solution_id => @solution.id
-      @problem.questions.each do |question|
-        response.should have_selector('span', :content => question.text)
-      end
-    end
-
-    it "should have an element for each solution's answer" do
-      get :index, :solution_id => @solution.id
-      @solution.answers.each do |answer|
-        response.should have_selector('span', :content => answer.rating)
-        response.should have_selector('span', :content => answer.comment)
-      end
-    end
-
-    #this test requires the question's not have the same text
-    it "should not contain other problem's question" do
-      get :index, :solution_id => @solution.id
-      @other_problem.questions.each do |question|
-        response.should_not have_selector('span', :content => question.text)
-      end
-    end
-
-    #this test requires the answer's not have the same rating
-    it "should not contain other solution's answer" do
-      get :index, :solution_id => @solution.id
-      @other_solution.answers.each do |answer|
-        response.should_not have_selector('span', :content => answer.rating)
-        response.should_not have_selector('span', :content => answer.comment)
-      end
-    end
-
-    #TODO - find a pagination gem that works in 3.1
-    it "should paginate answers" do
-      pending
-#      get :index, :solution_id => @solution.id
-#      response.should have_selector('div.pagination')
-#      response.should have_selector('span.disabled', :content => "Previous")
-#      response.should have_selector('a', :href => "/answers?page=2",
-#                                         :content => "2")
-#      response.should have_selector('a', :href => "/answers?page=2",
-#                                         :content => "Next")
-    end
-
-    describe "more questions than existing answers" do
-
-      before(:each) do
-        Factory(:question, :problem => @problem, :text => "Unanswered question")
-      end
-
-      it "should have blank elements for questions without answers" do
-        pending
-      end
     end
   end
 

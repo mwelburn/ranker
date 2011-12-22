@@ -9,6 +9,14 @@ describe SolutionsController do
       @user = Factory(:user)
       @problem = Factory(:problem, :user => @user)
       @solution = Factory(:solution, :problem => @problem)
+      @question = Factory(:question, :problem => @problem)
+      @answer = Factory(:answer, :solution => @solution, :question => @question)
+      @attr = {
+          @answer.id => {:question_id => @question.id,
+                         :rating => 2,
+                        :comment => "Updated Answer Comment"
+          }
+      }
     end
 
     it "should deny access to 'index'" do
@@ -43,6 +51,11 @@ describe SolutionsController do
 
     it "should deny access to 'update'" do
       put :update, :id => @solution, :solution => { :name => "Updated Name" }
+      response.should redirect_to(new_user_session_path)
+    end
+
+    it "should deny access to 'answers'" do
+      put :answers, :id => @solution, :answers => @attr
       response.should redirect_to(new_user_session_path)
     end
   end
@@ -508,6 +521,66 @@ describe SolutionsController do
           put :update, :id => 1000, :solution => @attr
           response.should redirect_to(error_path)
         end
+      end
+    end
+  end
+
+  describe "PUT 'answers'" do
+
+    before(:each) do
+      @user = Factory(:user)
+      @problem = Factory(:problem, :user => @user)
+      @question = Factory(:question, :problem => @problem)
+      @solution = Factory(:solution, :problem => @problem)
+      @answer = Factory(:answer, :solution => @solution, :question => @question)
+      @attr = {
+          @answer.id => {:question_id => @question.id,
+                         :rating => 2,
+                        :comment => "Updated Answer Comment"
+          }
+      }
+    end
+
+    describe "for an unauthorized user" do
+
+      before(:each) do
+        invalid_user = Factory(:user, :email => Factory.next(:email))
+        test_sign_in(invalid_user)
+      end
+
+      it "should deny access" do
+        put :answers, :id => @solution, :answers => @attr
+        response.should redirect_to(error_path)
+      end
+
+      it "should not edit the answers" do
+        pending
+#        put :answers, :id => @solution, :answers => @attr
+#        @solution.reload
+#        @solution.name.should_not == @attr[:name]
+#        @solution.comment.should_not == @attr[:comment]
+      end
+
+      it "should have a flash message" do
+        put :answers, :id => @solution, :answers => @attr
+        flash[:failure].should =~ /solution does not exist/i
+      end
+    end
+
+    describe "for an authorized user" do
+
+      before(:each) do
+        test_sign_in(@user)
+      end
+
+      describe "success" do
+        pending
+        #TODO- make sure to test updating a single answer, as well as updating many
+      end
+
+      describe "failure" do
+        pending
+        #TODO- test some failures in a batch of successes
       end
     end
   end
