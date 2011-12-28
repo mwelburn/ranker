@@ -20,7 +20,7 @@ class Solution < ActiveRecord::Base
   end
 
   def validate_solution
-    if self.problem.questions.length > answers.length
+    if self.problem.questions.length > self.answers.length
       self.completed = false
     elsif answers.find_by_rating(nil)
       self.completed = false
