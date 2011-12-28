@@ -6,7 +6,7 @@ class SolutionsController < ApplicationController
   def index
     #TODO- reverse the sort order so it is DESC
     #TODO- put INC at the end
-    @solutions = @problem.solutions.sort_by {|solution| solution.ranking}
+    @solutions = @problem.solutions
     @title = "All solutions"
   end
 

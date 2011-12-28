@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(:version => 20111212020917) do
     t.integer  "user_id"
     t.string   "name"
     t.string   "comment"
-    t.boolean  "public"
+    t.integer  "question_total", :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(:version => 20111212020917) do
 
   create_table "questions", :force => true do |t|
     t.integer  "problem_id"
-    t.string   "position"
+    t.integer  "position"
     t.string   "text"
     t.integer  "weight"
     t.datetime "created_at"
@@ -50,6 +50,8 @@ ActiveRecord::Schema.define(:version => 20111212020917) do
     t.integer  "problem_id"
     t.string   "name"
     t.string   "comment"
+    t.integer  "answer_total", :default => 0
+    t.boolean  "completed",    :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

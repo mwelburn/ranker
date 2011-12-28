@@ -1,4 +1,5 @@
 class Solution < ActiveRecord::Base
+
   attr_accessible :name, :comment
 
   belongs_to :problem
@@ -6,41 +7,41 @@ class Solution < ActiveRecord::Base
   accepts_nested_attributes_for :answers, :allow_destroy => true
 
   validates :name, :presence => true,
-                   :length => { :maximum => 75 }
+                   :length => { :maximum => 75 },
+                   :uniqueness => { :scope => :problem_id }
   validates :problem_id, :presence => true
 
-  #TODO - can I implement this using the ranking method?
-  #default_scope :order => 'solutions.ranking DESC'
-#  default_scope order("ranking DESC")
+  default_scope :order => 'solutions.completed DESC, solutions.answer_total DESC'
 
-  def ranking
-    questions = self.problem.questions
+  def update_answer_total
+    #When the rating is nil, it will convert to the integer zero
+    self.answer_total = self.answers.collect{ |i| i.rating.to_i * i.question.weight.to_i }.sum
+    self.save!
+  end
 
-    if !questions.empty?
-      if questions.length > self.answers.length
-        # Not all questions have been answered
-        "INC"
-      elsif self.answers.find_by_rating(nil)
-        # Not all questions have been answered
-        "INC"
-      else
-        temp_ranking = 0
-        self.answers.each do |answer|
-          temp_ranking += answer.question.weight * answer.rating
-        end
-        temp_ranking
-      end
+  def validate_solution
+    if self.problem.questions.length > answers.length
+      self.completed = false
+    elsif answers.find_by_rating(nil)
+      self.completed = false
     else
-      0
+      self.completed = true
+    end
+    self.save!
+  end
+
+  def match_decimal
+    questions = self.problem.questions
+    0 if questions.empty?
+
+    if questions.length > self.answers.length
+      # Not all questions have been answered
+      -1
+    elsif self.answers.find_by_rating(nil)
+      # Not all questions have been answered
+      -1
+    else
+      self.answer_total.to_f / self.problem.question_total
     end
   end
-
-  def order(*args)
-    return self if args.blank?
-
-    relation = clone
-    relation.order_values += args.flatten
-    relation
-  end
-
 end

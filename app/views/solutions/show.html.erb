@@ -5,7 +5,11 @@
         Back to <%= link_to "Solutions", problem_solutions_path(@problem) %>
       </span>
       <span class="ranking">
-        <%= @solution.ranking %>
+        <% if @solution.completed %>
+          <%= number_to_percentage(@solution.match_decimal * 100, :precision => 1) %>
+        <% else %>
+          INC
+        <% end %>
       </span>
 	  <h1>
   		<span id="name"><%= @solution.name %></span>

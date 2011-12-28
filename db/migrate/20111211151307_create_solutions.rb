@@ -4,6 +4,8 @@ class CreateSolutions < ActiveRecord::Migration
       t.integer :problem_id
       t.string :name
       t.string :comment
+      t.integer :answer_total, :default => 0
+      t.boolean :completed, :default => false
 
       t.timestamps
     end

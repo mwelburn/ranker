@@ -1,6 +1,10 @@
 <li>
   <span class="ranking">
-    <%= solution.ranking %>
+    <% if solution.completed %>
+      <%= number_to_percentage(solution.match_decimal * 100, :precision => 1) %>
+    <% else %>
+      INC
+    <% end %>
   </span>
   <%= link_to solution.name, solution %>
   <span class="comment">

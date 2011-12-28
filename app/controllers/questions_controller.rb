@@ -23,7 +23,9 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
+    problem = @question.problem
     if @question.destroy
+      problem.invalidate_solutions
       redirect_to problem_questions_path(@problem), :flash => { :success => "Question deleted" }
     else
       redirect_to @question, :flash => { :failure => "Error deleting question"}
