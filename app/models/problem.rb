@@ -36,4 +36,13 @@ class Problem < ActiveRecord::Base
     self.save!
   end
 
+  def update_answer_totals
+    unless self.solutions.blank?
+      self.solutions.each do |solution|
+        solution.update_answer_total
+        solution.validate_solution
+      end
+    end
+  end
+
 end

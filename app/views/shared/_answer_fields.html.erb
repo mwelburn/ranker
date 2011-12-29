@@ -1,12 +1,42 @@
-<li>
-  <span>
-    <%= answer.question.text %>
+<li class="answer">
+  <span class="question_text">
+    <%= "#{answer.question.position}) #{answer.question.text}" %>
   </span>
-  <span>
-    <%= f.text_field :rating %>
+  <span class="information">
+    <div class="rating round_top">
+      <%= f.label :rating %>:
+      <%= f.radio_button :rating, 1 %>1
+      <%= f.radio_button :rating, 2 %>2
+      <%= f.radio_button :rating, 3 %>3
+      <%= f.radio_button :rating, 4 %>4
+      <%= f.radio_button :rating, 5 %>5
+    </div>
+    <!-- TODO - need to be able to hide/show comments: default hide unless there is a value in there -->
+    <div id='<%= "comment_#{answer.id}" %>' class="comment" <% if answer.comment.blank? %>style="display:none"<% end %>>
+      <%= f.text_area :comment %>
+    </div>
+    <div id='<%= "toggle_comment_#{answer.id}" %>' class="toggle_comment round_bottom">
+       <% if answer.comment.blank? %>
+          Show Comment
+       <% else %>
+          Hide Comment
+       <% end %>
+    </div>
   </span>
-  <span>
-    <%= f.text_field :comment %>
-  </span>
+  <script type="text/javascript">
+    $('#<%= "toggle_comment_#{answer.id}" %>').click(function() {
+      $('#<%= "comment_#{answer.id}" %>').slideToggle('slow', function() {
+        // Animation complete.
+        var $comment_span = $('#<%= "toggle_comment_#{answer.id}" %>');
+
+        if ($comment_span.text().trim() == "Hide Comment") {
+          $comment_span.text("Show Comment");
+        } else {
+          $comment_span.text("Hide Comment");
+        }
+      });
+    });
+  </script>
   <%= f.hidden_field :question_id %>
+  <div class="clear"></div>
 </li>

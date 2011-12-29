@@ -2,6 +2,12 @@
   width: 710px;
 }
 
+.clear {
+	clear: both;
+	height: 0;
+	overflow: hidden;
+}
+
 body {
   background: #5FC0CE;
 }
@@ -112,6 +118,11 @@ a.signup_button {
   -webkit-border-radius: 10px;
   border-radius: 10px;
 }
+.round_top {
+  -moz-border-radius: 10px 10px 0px 0px;
+  -webkit-border-radius: 10px 10px 0px 0px;
+  border-radius: 10px 10px 0px 0px;
+}
 
 .round_bottom {
   -moz-border-radius: 0px 0px 10px 10px;
@@ -220,4 +231,52 @@ ul.problems {
 
 .hide_solutions:hover {
   cursor: pointer;
+}
+
+/* answers */
+
+ul.answers {
+
+}
+
+.answers li {
+  margin-top: 1em;
+  list-style: none;
+  width: 100%;
+  display: block;
+}
+
+.answers li span.question_text {
+  float: left;
+}
+
+.answers li span.information {
+  float: right;
+  width: 40%;
+}
+
+.answers li span div {
+  border: 1px solid #000;
+  background-color: #FFD373;
+  padding: 0px 5px;
+}
+
+.answers li span div.rating {
+}
+
+.answers li span div.comment, .answers li span div.toggle_comment {
+  border-top: 0px;
+}
+
+.answers li span div.toggle_comment {
+  text-align: right;
+}
+
+.answers li span div.toggle_comment:hover {
+  cursor: pointer;
+}
+
+.answers li span div.comment textarea {
+  height: 50px;
+  width: 95%;
 }

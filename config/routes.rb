@@ -3,7 +3,7 @@ Ranker::Application.routes.draw do
   
   resources :problems do
     resources :questions, :only => [ :index, :new, :create ]
-    resources :solutions, :only => [ :index, :new, :create ]
+    resources :solutions, :only => [ :new, :create ]
   end
   resources :solutions, :except => [ :index, :new, :create ] do
     member do

@@ -2,7 +2,7 @@
   <tr>
 	<td class="main">
       <span>
-        Back to <%= link_to "Solutions", problem_solutions_path(@problem) %>
+        Back to <%= link_to @problem.name, @problem %>
       </span>
       <span class="ranking">
         <% if @solution.completed %>

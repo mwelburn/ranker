@@ -20,13 +20,13 @@ class Question < ActiveRecord::Base
                                       }
   validates :problem_id, :presence => true
 
-  default_scope :order => 'questions.position ASC'
+  default_scope :order => 'questions.problem_id ASC, questions.position ASC'
 
   private
 
     def default_values
       self.weight = 1 unless self.weight
-      # TODO - set position to 1 higher than the highest position of this problem's questions
+      # set position to 1 higher than the highest position of this problem's questions
       self.position = (self.problem.highest_question_position + 1) unless self.position
     end
 end
