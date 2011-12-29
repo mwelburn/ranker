@@ -54,7 +54,7 @@ class SolutionsController < ApplicationController
 
   def update
     if @solution.update_attributes(params[:solution])
-      redirect_to @solution, :flash => { :success => "Solution updated." }
+      redirect_to problem_solutions_path(@problem), :flash => { :success => "Solution updated." }
     else
       @title = "Edit solution"
       render :edit
@@ -63,7 +63,7 @@ class SolutionsController < ApplicationController
 
   def answers
     Answer.update(params[:answer].keys, params[:answer].values)
-    redirect_to @solution, :flash => { :success => "Answers updated." }
+    redirect_to problem_solutions_path(@problem), :flash => { :success => "Answers updated." }
     #TODO - need to handle failures due to validation -- wrap this in a transaction?? needs to give user feedback via the error flash message
 
     #TODO - need to verify the user actually has access to the answers...they should if solution is validated

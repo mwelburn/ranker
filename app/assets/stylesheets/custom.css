@@ -3,7 +3,7 @@
 }
 
 body {
-  background: #cff;
+  background: #5FC0CE;
 }
 
 header {
@@ -43,14 +43,6 @@ footer nav {
 a {
   color: 09c;
   text-decoration: none;
-}
-
-ul.users {
-  margin-top: 1em;
-}
-
-.users li {
-  list-style: none;
 }
 
 a:hover {
@@ -121,6 +113,12 @@ a.signup_button {
   border-radius: 10px;
 }
 
+.round_bottom {
+  -moz-border-radius: 0px 0px 10px 10px;
+  -webkit-border-radius: 0px 0px 10px 10px;
+  border-radius: 0px 0px 10px 10px;
+}
+
 .field_with_errors {
   margin-top: 10px;
   padding: 2px;
@@ -160,4 +158,66 @@ a.signup_button {
 #error_explanation ul li {
   font-size: 12px;
   list-style: square;
+}
+
+/* Problems */
+
+ul.problems {
+  margin-top: 1em;
+}
+
+.problems li {
+  list-style: none;
+  margin-bottom: 20px;
+}
+
+.problems li div.problem {
+  background-color: #FF7D73;
+  border: 1px solid #000;
+}
+
+.problems li div.problem div.information {
+  margin-left: 25px;
+}
+
+.problems li div.solutions li {
+  margin-bottom: 0px;
+}
+
+.problems li div.solutions li.hide {
+  list-style: none;
+}
+
+.problem_solution {
+  margin-left: 100px;
+  margin-right: 25px;
+  border: 1px solid #000;
+  border-top: 0px;
+  background-color: #FFD373;
+}
+
+.problem_solution div.information {
+  padding: 5px;
+}
+
+.problem_solution span.ranking {
+    
+}
+
+.problem_solution span.name {
+  
+}
+
+.problem_solution span h3 {
+  display: inline;
+}
+
+.hide_solutions {
+  text-align: right;
+  padding-right: 25px;
+  background-color: #FF4E40;
+}
+
+.hide_solutions:hover {
+  cursor: pointer;
 }

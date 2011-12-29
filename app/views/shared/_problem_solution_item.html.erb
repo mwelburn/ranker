@@ -1,0 +1,18 @@
+<li id='<%= "solution_#{problem_solution_item.id}" %>' class="problem_solution">
+  <div class="information">
+  <span class="ranking">
+    <h3>
+    <% if problem_solution_item.completed %>
+      <%= number_to_percentage(problem_solution_item.match_decimal * 100, :precision => 1) %>
+    <% else %>
+      INC
+    <% end %>
+    </h3>
+  </span>
+  <span class="name">
+    <h3>
+      <%= link_to problem_solution_item.name, problem_solution_item %>
+    </h3>
+  </span>
+  </div>
+</li>

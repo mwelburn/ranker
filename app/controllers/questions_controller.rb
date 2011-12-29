@@ -16,7 +16,7 @@ class QuestionsController < ApplicationController
   def create
     @question = @problem.questions.build(params[:question])
     if @question.save
-      redirect_to @question, :flash => { :success => "Question created!" }
+      redirect_to problem_questions_path(@problem), :flash => { :success => "Question created!" }
     else
       render :new
     end

@@ -1,5 +1,5 @@
 <% unless @problems.empty? %>
-  <table class="problems" summary="User problems">
+  <ul class="problems" summary="User problems">
 	<%= render :partial => 'shared/problem_item', :collection => @problems %>
-  </table>
+  </ul>
 <% end %>

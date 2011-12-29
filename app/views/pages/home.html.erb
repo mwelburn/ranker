@@ -1,12 +1,8 @@
 <% if user_signed_in? %>
-  <table class="front" summary="For signed-in users">
-    <tr>
-      <td class="main">
-        <%= link_to "New Problem?", new_problem_path %>
-        <%= render 'shared/problems' %>
-      </td>
-    </tr>
-  </table>
+  <div class="main">
+    <%= link_to "New Problem?", new_problem_path %>
+    <%= render 'shared/problems' %>
+  </div>
 <% else %>
   <h1>Ranker</h1>
   <p>
