@@ -8,7 +8,7 @@ class Question < ActiveRecord::Base
   validates :text, :presence => true,
                    :uniqueness => { :scope => :problem_id }
   # TODO - should we allow duplicate positions (then we'd have to :before_save fix that)
-  validates :position, :numericality => { :greater_than_or_equal_to => 0,
+  validates :position, :numericality => { :greater_than => 0,
                                           :message => "is not a non-negative integer",
                                           :only_integer => true
                                         }
@@ -27,6 +27,6 @@ class Question < ActiveRecord::Base
     def default_values
       self.weight = 1 unless self.weight
       # set position to 1 higher than the highest position of this problem's questions
-      self.position = (self.problem.highest_question_position + 1) unless self.position
+      self.position = (self.problem.new_question_position) unless self.position
     end
 end

@@ -12,8 +12,8 @@ class Problem < ActiveRecord::Base
 
   default_scope :order => 'problems.created_at DESC'
 
-  def highest_question_position
-    -1 unless self.questions
+  def new_question_position
+    1 unless self.questions
 
     pos = 0
     self.questions.each do |q|
@@ -21,7 +21,7 @@ class Problem < ActiveRecord::Base
         pos = q.position
       end
     end
-    pos
+    pos + 1
   end
 
   def invalidate_solutions
@@ -36,7 +36,7 @@ class Problem < ActiveRecord::Base
     self.save!
   end
 
-  def update_answer_totals
+  def update_solutions
     unless self.solutions.blank?
       self.solutions.each do |solution|
         solution.update_answer_total

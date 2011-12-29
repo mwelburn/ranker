@@ -7,13 +7,17 @@ class QuestionObserver < ActiveRecord::Observer
 
   def after_save(question)
     problem = question.problem
+    problem.questions.reload
+
     problem.update_question_total
   end
 
-  def before_destroy(question)
+  def after_destroy(question)
     problem = question.problem
+    problem.questions.reload
+
     problem.update_question_total
-    problem.update_answer_totals
+    problem.update_solutions
   end
 
 end
