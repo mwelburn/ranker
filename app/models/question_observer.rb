@@ -9,5 +9,11 @@ class QuestionObserver < ActiveRecord::Observer
     problem = question.problem
     problem.update_question_total
   end
-  
+
+  def before_destroy(question)
+    problem = question.problem
+    problem.update_question_total
+    problem.update_answer_totals
+  end
+
 end
