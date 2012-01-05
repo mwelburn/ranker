@@ -4,9 +4,10 @@
 	<ul>
 	  <li><%= link_to "Home", root_path %></li>
 	  <% if user_signed_in? %>
-	  <li><%= link_to "Settings", edit_user_registration_path %></li>
+	  <li><%= link_to "Edit Profile", edit_user_registration_path %></li>
 	  <% end %>
-	  <li><%= link_to "Help", help_path %></li>
+      <!-- TODO - uncomment Help once there is something of value to put there -->
+	  <!-- <li><%= link_to "Help", help_path %></li> -->
 	  <% if user_signed_in? %>
 	  <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
 	  <% else %>

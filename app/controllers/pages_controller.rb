@@ -3,7 +3,7 @@ class PagesController < ApplicationController
   def home
     @title = "Home"
     if user_signed_in?
-      @problems = current_user.problems.paginate(:page => params[:page])
+      @problems = current_user.problems
     end
   end
   

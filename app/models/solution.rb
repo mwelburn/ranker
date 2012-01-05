@@ -13,6 +13,22 @@ class Solution < ActiveRecord::Base
 
   default_scope :order => 'solutions.completed DESC, solutions.answer_total DESC'
 
+  def update_answers(answers)
+    errors = {}
+    answers.each do |answer_id, answer_attrs|
+      answer = self.answers.find_by_id(answer_id)
+      if answer.blank? and not answer = self.answers.find_by_question_id(answer_attrs.question_id)
+        #TODO - should this error, or can we handle it somehow?
+        self.answers.create!(answer_attrs)
+      else
+        unless answer.update_attributes(answer_attrs)
+          errors[answer_id] = answer.errors
+        end
+      end
+    end
+    errors
+  end
+
   def update_answer_total
     #When the rating is nil, it will convert to the integer zero
     self.answer_total = self.answers.collect{ |i| i.rating.to_i * i.question.weight.to_i }.sum

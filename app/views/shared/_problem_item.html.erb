@@ -17,9 +17,13 @@
       </ul>
       <ul>
         <li class="problem_solution round_bottom hide_solutions">
-          <span id='<%= "toggle_solutions_#{problem_item.id}" %>'>
+          <span class="left">
+            <%= link_to "New Solution?", new_problem_solution_path(problem_item) %>
+          </span>
+          <span class="right" id='<%= "toggle_solutions_#{problem_item.id}" %>'>
             Hide Solutions
           </span>
+          <div class="clear"/>
           <script type="text/javascript">
             $('#<%= "toggle_solutions_#{problem_item.id}" %>').click(function() {
               $('#<%= "solutions_#{problem_item.id}" %>').slideToggle('slow', function() {

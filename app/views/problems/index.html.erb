@@ -1,7 +1,4 @@
-<h1>All problems</h1>
-
-<%= link_to "New Problem?", new_problem_path %>
-
-<ul class="problems">
-  <%= render @problems %>
-</ul>
+<div class="main">
+    <%= link_to "New Problem?", new_problem_path %>
+    <%= render 'shared/problems' %>
+</div>
