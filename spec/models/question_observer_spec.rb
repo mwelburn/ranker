@@ -35,7 +35,7 @@ describe QuestionObserver do
       weight = 3
       lambda do
         Factory(:question, :problem => @problem, :text => Factory.next(:text), :weight => weight)
-      end.should change(@problem, :question_total).by(weight * 5)
+      end.should change(@problem, :question_total).by(weight)
     end
 
     it "should update the question total after updating an existing question" do
@@ -45,7 +45,7 @@ describe QuestionObserver do
 
       lambda do
         question.update_attributes(:weight => new_weight)
-      end.should change(@problem, :question_total).by((new_weight - original_weight) * 5)
+      end.should change(question.problem, :question_total).by((new_weight - original_weight))
     end
 
     it "should not update the question total if weight doesn't change" do
@@ -54,7 +54,7 @@ describe QuestionObserver do
 
       lambda do
         question.update_attributes(:weight => original_weight)
-      end.should_not change(@problem, :question_total)
+      end.should_not change(question.problem, :question_total)
     end
   end
 
@@ -70,7 +70,7 @@ describe QuestionObserver do
 
       lambda do
         question.destroy
-      end.should change(@problem, :question_total).by(weight * -5)
+      end.should change(question.problem, :question_total).by(-weight)
     end
 
     it "should update the answer totals of all solutions" do

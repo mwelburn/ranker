@@ -12,6 +12,10 @@ class Problem < ActiveRecord::Base
 
   default_scope :order => 'problems.created_at DESC'
 
+  def question_potential
+    self.question_total * 5
+  end
+
   def new_question_position
     1 unless self.questions
 
@@ -27,12 +31,12 @@ class Problem < ActiveRecord::Base
   def invalidate_solutions
     self.solutions.each do |solution|
       solution.completed = false
-      solution.save
+      solution.save!
     end
   end
 
   def update_question_total
-    self.question_total = self.questions.collect{ |i| i.weight.to_i * 5 }.sum
+    self.question_total = self.questions.collect{ |i| i.weight.to_i }.sum
     self.save!
   end
 

@@ -57,37 +57,36 @@ describe Solution do
     end
 
     it "should be '0' without any questions" do
-      @solution.ranking.should == 0
-    end
-
-    it "should update the ranking when questions are created" do
-      @question1 = Factory(:question, :problem => @problem)
-      @solution.ranking.should == 'INC'
+      @solution.answer_total.should == 0
     end
 
     describe "existing questions with answers" do
 
       before(:each) do
         @question1 = Factory(:question, :problem => @problem)
-        @question2 = Factory(:question, :problem => @problem, :text => "New Text", :position => 1)
+        @question2 = Factory(:question, :problem => @problem, :text => Factory.next(:text), :position => 1)
         @answer1 = Factory(:answer, :question => @question1, :solution => @solution, :rating => 1, :created_at => 1.day.ago)
         @answer2 = Factory(:answer, :question => @question2, :solution => @solution, :rating => 4, :created_at => 1.hour.ago)
       end
 
-      it "should update the ranking when questions are updated" do
-        pending
-      end
-
-      it "should update the ranking when questions are deleted" do
-        pending
-      end
-
       it "should update the ranking when answers are created" do
-        pending
+        @question3 = Factory(:question, :problem => @problem, :text => Factory.next(:text))
+        rating = 1
+
+        lambda do
+          @answer3 = Factory(:answer, :question => @question3, :solution => @solution, :rating => rating, :created_at => 1.day.ago)
+        end.should change(@solution, :answer_total).by(@question3.weight * rating)
       end
 
       it "should update the ranking when answers are updated" do
-        pending
+        @question3 = Factory(:question, :problem => @problem, :text => Factory.next(:text))
+        @answer3 = Factory(:answer, :question => @question3, :solution => @solution, :rating => 1, :created_at => 1.day.ago)
+        original_rating = @answer3.rating
+        new_rating = 4
+
+        lambda do
+          @answer3.update_attributes(:rating => new_rating)
+        end.should change(@solution, :answer_total).by(@question3.weight * (new_rating - original_rating))
       end
 
       it "should update the ranking when answers are deleted" do
@@ -102,6 +101,12 @@ describe Solution do
         pending
       end
     end
+  end
+
+  describe "match decimal" do
+
+    pending
+
   end
 
   describe "answer associations" do

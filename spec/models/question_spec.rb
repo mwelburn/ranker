@@ -7,7 +7,7 @@ describe Question do
     @problem = Factory(:problem, :user => @user)
     @attr = {
       :text => "Example Question",
-      :position => 0,
+      :position => 1,
       :weight => 1
     }
   end

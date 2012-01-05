@@ -7,6 +7,7 @@ class QuestionObserver < ActiveRecord::Observer
 
   def after_save(question)
     problem = question.problem
+    #need to reload the cache
     problem.questions.reload
 
     problem.update_question_total
@@ -14,6 +15,7 @@ class QuestionObserver < ActiveRecord::Observer
 
   def after_destroy(question)
     problem = question.problem
+    #need to reload the cache
     problem.questions.reload
 
     problem.update_question_total

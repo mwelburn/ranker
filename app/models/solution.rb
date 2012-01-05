@@ -41,7 +41,7 @@ class Solution < ActiveRecord::Base
       # Not all questions have been answered
       -1
     else
-      self.answer_total.to_f / self.problem.question_total
+      self.answer_total.to_f / self.problem.question_potential
     end
   end
 end
