@@ -25,7 +25,6 @@ end
 Factory.define :problem do |problem|
   problem.name "Foo bar"
   problem.comment "Comment"
-  problem.public false
   problem.association :user
 end
 
@@ -37,7 +36,7 @@ end
 
 Factory.define :question do |question|
   question.text "Question text"
-  question.position 0
+  question.position 1
   question.weight 1
   question.association :problem
 end

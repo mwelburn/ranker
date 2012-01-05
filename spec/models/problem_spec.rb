@@ -48,11 +48,6 @@ describe Problem do
     it "should allow blank comment" do
       @user.problems.build(@attr.merge(:comment => "")).should be_valid
     end
-
-    it "should default public to false if blank" do
-      @problem = @user.problems.build(@attr.merge(:public => ""))
-      @problem.public == false
-    end
   end
 
   describe "solution associations" do
@@ -107,4 +102,53 @@ describe Problem do
     end
   end
 
+  #TODO - should all of this be isolated within the observer spec...within here, explicitly test methods
+  describe "ranking" do
+
+    before(:each) do
+      @problem = @user.problems.create(@attr)
+    end
+
+    it "should be '0' without any questions" do
+      @problem.question_total.should == 0
+    end
+
+    it "should update the ranking when questions are created" do
+      weight = 3
+
+      lambda do
+        Factory(:question, :problem => @problem, :weight => weight)
+      end.should change(@problem, :question_total).by(weight)
+    end
+
+    describe "existing questions with answers" do
+
+      before(:each) do
+        @solution = Factory(:solution, :problem => @problem)
+        @question1 = Factory(:question, :problem => @problem)
+        @question2 = Factory(:question, :problem => @problem, :text => Factory.next(:text), :position => 1)
+        @answer1 = Factory(:answer, :question => @question1, :solution => @solution, :rating => 1, :created_at => 1.day.ago)
+        @answer2 = Factory(:answer, :question => @question2, :solution => @solution, :rating => 4, :created_at => 1.hour.ago)
+      end
+
+      it "should update the ranking when questions are created" do
+        weight = 4
+
+        lambda do
+          Factory(:question, :problem => @problem, :text => Factory.next(:text), :weight => weight)
+        end.should change(@problem, :question_total).by(weight)
+      end
+
+      it "should update the ranking when questions are deleted" do
+        weight = @question2.weight
+
+        lambda do
+          @question2.destroy
+        end.should change(@problem, :question_total).by(-weight)
+      end
+
+      pending
+
+    end
+  end
 end

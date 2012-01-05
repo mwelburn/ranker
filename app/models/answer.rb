@@ -13,6 +13,6 @@ class Answer < ActiveRecord::Base
   validates :question_id, :presence => true
   validates :solution_id, :presence => true
 
-  default_scope :order => 'answers.created_at ASC'
+  default_scope :order => 'answers.created_at DESC'
 
 end
