@@ -1,4 +1,4 @@
-<h1>New solution</h1>
+<h1>New solution for <%= link_to @problem.name, @problem %></h1>
 <%= form_for [@problem, @solution] do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
   <div class="field">

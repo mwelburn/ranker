@@ -113,6 +113,14 @@ a.signup_button {
 
 /* Round corners */
 
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
 .round {
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
@@ -225,7 +233,7 @@ ul.problems {
 
 .hide_solutions {
   text-align: right;
-  padding-right: 25px;
+  padding: 0 25px;
   background-color: #FF4E40;
 }
 

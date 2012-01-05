@@ -55,32 +55,17 @@ class SolutionsController < ApplicationController
   end
 
   def answers
-    Answer.update(params[:answer].keys, params[:answer].values)
-    redirect_to @problem, :flash => { :success => "Answers updated." }
+    errors = @solution.update_answers(params[:answer])
+    if errors.empty?
+      redirect_to @problem, :flash => { :success => "Answers updated." }
+    else
+
+      render :show
+    end
     #TODO - need to handle failures due to validation -- wrap this in a transaction?? needs to give user feedback via the error flash message
 
     #TODO - need to verify the user actually has access to the answers...they should if solution is validated
     #TODO - do a check incase new answers are added, do they respect validation (can't have 2 answers to a problem, etc)
-    
-    #answers = params[:answer]
-    #
-    #unless answers.nil?
-    #  answers.each do |answer|
-    #    @solution = Solution.find_by_id(answer.solution_id)
-    #  end
-    #end
-    #
-    #if @solution.answers do |answer|
-    #  #figure out how to set each answer
-    #  #answer.find_by_id.update_attributes(params[:answer])
-    #end
-    #  redirect_to @solution, :flash => { :success => "Answer updated." }
-    #else
-    #  @title = "All answers"
-    #  render @solution
-    #end
-
-#ensure there is a client side "clear" that just sets rating/comment to blank and update accepts those values
   end
 
   private
