@@ -5,5 +5,26 @@
 // the compiled file.
 //
 //= require jquery
+//= require nested_form
 //= require jquery_ujs
 //= require_tree .
+$(document).ready(function(){
+    $('span#add_question').click(function() {
+        var $new_question = $('#questions li:first').clone();
+
+        //clear existing inputs
+        $new_question.find('input').val('')
+
+        //re-set the IDs
+
+
+        //hide the question
+        $new_question.hide();
+
+        //append the question to the stack
+        $new_question.appendTo('#questions');
+
+        //display question via animation
+        $new_question.slideDown()
+    });
+});

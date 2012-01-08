@@ -1,6 +1,5 @@
 class Solution < ActiveRecord::Base
-
-  attr_accessible :name, :comment
+  attr_accessible :name, :comment, :answers_attributes
 
   belongs_to :problem
   has_many :answers, :dependent => :destroy
@@ -15,14 +14,14 @@ class Solution < ActiveRecord::Base
 
   def update_answers(answers)
     errors = {}
-    answers.each do |answer_id, answer_attrs|
-      answer = self.answers.find_by_id(answer_id)
-      if answer.blank? and not answer = self.answers.find_by_question_id(answer_attrs.question_id)
+    answers.each do |index, answer_attrs|
+      answer = self.answers.find_by_id(answer_attrs["id"])
+      if answer.blank? and not answer = self.answers.find_by_question_id(answer_attrs["question_id"])
         #TODO - should this error, or can we handle it somehow?
         self.answers.create!(answer_attrs)
       else
         unless answer.update_attributes(answer_attrs)
-          errors[answer_id] = answer.errors
+          errors[answer_attrs["id"]] = answer.errors
         end
       end
     end

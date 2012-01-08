@@ -2,7 +2,10 @@ Ranker::Application.routes.draw do
   devise_for :users
   
   resources :problems do
-    resources :questions, :only => [ :index, :new, :create ]
+    member do
+      put 'questions'
+    end
+    resources :questions, :only => [ :create ]
     resources :solutions, :only => [ :new, :create ]
   end
   resources :solutions, :except => [ :index, :new, :create ] do
@@ -11,8 +14,8 @@ Ranker::Application.routes.draw do
     end
     resources :answers, :only => [ :create ]
   end
-  resources :questions, :except => [ :index, :new, :create ]
   resources :answers, :only => [ :update ]
+  resources :questions, :only => [ :update, :destroy ]
 
   match '/about', :to => 'pages#about'
   match '/contact', :to => 'pages#contact'

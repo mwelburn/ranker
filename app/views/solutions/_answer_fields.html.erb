@@ -1,6 +1,6 @@
 <li class="answer">
   <span class="question_text">
-    <%= "#{answer.question.position}) #{answer.question.text}" %>
+    <%= "#{f.object.question.text}" %>
   </span>
   <span class="information">
     <div class="rating round_top">
@@ -12,11 +12,11 @@
       <%= f.radio_button :rating, 5 %>5
     </div>
     <!-- TODO - need to be able to hide/show comments: default hide unless there is a value in there -->
-    <div id='<%= "comment_#{answer.id}" %>' class="comment" <% if answer.comment.blank? %>style="display:none"<% end %>>
+    <div id='<%= "comment_#{f.object.id}" %>' class="comment" <% if f.object.comment.blank? %>style="display:none"<% end %>>
       <%= f.text_area :comment %>
     </div>
-    <div id='<%= "toggle_comment_#{answer.id}" %>' class="toggle_comment round_bottom">
-       <% if answer.comment.blank? %>
+    <div id='<%= "toggle_comment_#{f.object.id}" %>' class="toggle_comment round_bottom">
+       <% if f.object.comment.blank? %>
           Show Comment
        <% else %>
           Hide Comment
@@ -24,10 +24,10 @@
     </div>
   </span>
   <script type="text/javascript">
-    $('#<%= "toggle_comment_#{answer.id}" %>').click(function() {
-      $('#<%= "comment_#{answer.id}" %>').slideToggle('slow', function() {
+    $('#<%= "toggle_comment_#{f.object.id}" %>').click(function() {
+      $('#<%= "comment_#{f.object.id}" %>').slideToggle('normal', function() {
         // Animation complete.
-        var $comment_span = $('#<%= "toggle_comment_#{answer.id}" %>');
+        var $comment_span = $('#<%= "toggle_comment_#{f.object.id}" %>');
 
         if ($comment_span.text().trim() == "Hide Comment") {
           $comment_span.text("Show Comment");

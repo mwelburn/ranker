@@ -1,9 +1,11 @@
 class Problem < ActiveRecord::Base
-  attr_accessible :name, :comment
+  attr_accessible :name, :comment, :questions_attributes
 
   belongs_to :user
   has_many :solutions, :dependent => :destroy
   has_many :questions, :dependent => :destroy
+
+  accepts_nested_attributes_for :questions, :allow_destroy => true
 
   validates :name, :presence => true,
                   :length => { :maximum => 75 },
@@ -47,6 +49,22 @@ class Problem < ActiveRecord::Base
         solution.validate_solution
       end
     end
+  end
+
+  def update_questions(questions)
+    errors = {}
+    questions.each do |index, question_attrs|
+      question = self.questions.find_by_id(question_attrs["id"])
+      if question.blank?
+        #TODO - how will we validate this and return error messages accordingly?
+        self.questions.create!(question_attrs)
+      else
+        unless question.update_attributes(question_attrs)
+          errors[question_attrs["id"]] = question.errors
+        end
+      end
+    end
+    errors
   end
 
 end

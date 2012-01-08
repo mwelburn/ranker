@@ -48,6 +48,19 @@ class ProblemsController < ApplicationController
     end
   end
 
+  def questions
+    success = @problem.update_attributes(params[:problem])
+    if success
+      redirect_to @problem, :flash => { :success => "Questions updated." }
+    else
+      @title = @problem.name
+      #TODO - don't think this is right
+      @questions = params[:problem]
+      @solutions = @problem.solutions
+      render 'problems/show'
+    end
+ end
+
   private
 
     def load_problem
