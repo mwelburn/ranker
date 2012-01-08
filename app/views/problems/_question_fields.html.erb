@@ -14,24 +14,15 @@
     </div>
   </span>
   <%= f.hidden_field :position %>
-  <span id="destroy_question_<%= f.object.id %>">
-    X
-  </span>
+  <%= f.hidden_field :_destroy, :id => "destroy_#{f.object.id}" %>
+  <%= f.link_to_remove "Delete" %>
   <div class="clear"></div>
-  <script type="text/javascript">
-    $('#<%= "destroy_question_#{f.object.id}" %>').click(function() {
-      var response = confirm("This question will be deleted. Are you sure?");
-      if (response) {
-          $.ajax({
-              type: "DELETE",
-              url: "/questions/<%= f.object.id %>",
-              success: function(msg) {
-                  $('#<%= "question_#{f.object.id}" %>').slideUp('normal', function() {
-                     $(this).remove();
-                  });
-              }
-          });
-      }
-    });
-  </script>
 </li>
+<script type="text/javascript">
+  $(document).ready(function(){
+     //if invalid submission, but this was supposed to be deleted
+     if ($("#destroy_<%= f.object.id %>").val() == "true") {
+         $("#question_<%= f.object.id %>").hide();
+     }
+  });
+</script>

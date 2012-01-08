@@ -36,6 +36,7 @@ group :development do
   gem 'sqlite3'
   gem 'ruby-debug19', :require => 'ruby-debug'
 
+  gem 'nested_form', :git => 'git://github.com/ryanb/nested_form.git'
   gem 'rspec-rails'
   gem 'faker'
 end

@@ -5,6 +5,7 @@
 // the compiled file.
 //
 //= require jquery
+//= require nested_form
 //= require jquery_ujs
 //= require_tree .
 $(document).ready(function(){

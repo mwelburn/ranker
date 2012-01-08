@@ -25,12 +25,10 @@
 <ul class="answers">
   <%= form_for @solution, :url => {:action => 'answers'}, :method => :put do |f| %>
     <% unless @answers.empty? %>
-      <% @answers.each do |answer| %>
-        <%= fields_for "answer[]", answer do |builder| %>
+        <%= f.fields_for :answers do |builder| %>
           <%= render 'shared/error_messages', :object => builder.object %>
           <%= render "answer_fields", :f => builder %>
         <% end %>
-      <% end %>
       <div class="actions">
         <%= f.submit "Submit" %>
       </div>

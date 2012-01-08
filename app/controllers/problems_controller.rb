@@ -49,21 +49,17 @@ class ProblemsController < ApplicationController
   end
 
   def questions
-    errors = @problem.update_questions(params[:question])
-    if errors.empty?
+    success = @problem.update_attributes(params[:problem])
+    if success
       redirect_to @problem, :flash => { :success => "Questions updated." }
     else
       @title = @problem.name
       #TODO - don't think this is right
-      @questions = params[:question]
+      @questions = params[:problem]
       @solutions = @problem.solutions
       render 'problems/show'
     end
-    #TODO - need to handle failures due to validation -- wrap this in a transaction?? needs to give user feedback via the error flash message
-
-    #TODO - need to verify the user actually has access to the questions...they should if solution is validated
-    #TODO - do a check incase new questions are added, do they respect validation (can't have 2 answers to a problem, etc)
-  end
+ end
 
   private
 
