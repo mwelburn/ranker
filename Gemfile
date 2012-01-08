@@ -30,13 +30,14 @@ gem 'devise', '1.4.5'
 gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git', :tag => 'v0.3.0.rc3'
 gem 'oa-oauth', :require => 'omniauth/oauth'
 
-gem 'will_paginate'
+gem 'nested_form', :git => 'git://github.com/ryanb/nested_form.git'
+
+#gem 'will_paginate'
 
 group :development do
   gem 'sqlite3'
   gem 'ruby-debug19', :require => 'ruby-debug'
 
-  gem 'nested_form', :git => 'git://github.com/ryanb/nested_form.git'
   gem 'rspec-rails'
   gem 'faker'
 end
