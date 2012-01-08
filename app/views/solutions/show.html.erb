@@ -18,6 +18,25 @@
       <span class="comment">
         <%= @solution.comment %>
       </span>
-      <%= render "shared/question_answers" %>
+    </td>
   </tr>
 </table>
+
+<ul class="answers">
+  <%= form_for @solution, :url => {:action => 'answers'}, :method => :put do |f| %>
+    <% unless @answers.empty? %>
+      <% @answers.each do |answer| %>
+        <%= fields_for "answer[]", answer do |builder| %>
+          <%= render 'shared/error_messages', :object => builder.object %>
+          <%= render "answer_fields", :f => builder %>
+        <% end %>
+      <% end %>
+      <div class="actions">
+        <%= f.submit "Submit" %>
+      </div>
+    <% end %>
+    <% if @answers.empty? %>
+      No questions exist. Create questions <%= link_to "here", problem_questions_path(@problem) %>
+    <% end %>
+  <% end %>
+</ul>

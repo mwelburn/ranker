@@ -1,14 +1,14 @@
-<%= form_for @problem do |f| %>
-  <%= render 'shared/error_messages', :object => f.object %>
+<%= form_for @problem do |problem_form| %>
+  <%= render 'shared/error_messages', :object => problem_form.object %>
   <div class="field">
-    <%= f.label :name %><br/>
-	<%= f.text_field :name %>
+    <%= problem_form.label :name %><br/>
+	<%= problem_form.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :comment %><br/>
-	<%= f.text_area :comment %>
+    <%= problem_form.label :comment %><br/>
+	<%= problem_form.text_area :comment %>
   </div>
   <div class="actions">
-	<%= f.submit "Submit" %>
+	<%= problem_form.submit "Submit" %>
   </div>
 <% end %>

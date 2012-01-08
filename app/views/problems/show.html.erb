@@ -1,20 +1,19 @@
-<table class="problem" summary="Problem information">
-  <tr>
-	<td class="main">
-      <span>
-        Back to <%= link_to "Problems", root_path %>
-      </span>
-	  <h1>
-  		<span id="name"><%= @problem.name %></span>
-	  </h1>
-      <p>
-        <%= link_to "Edit Problem", edit_problem_path(@problem) %>
-        <%= link_to "View Questions", problem_questions_path(@problem) %>
-      </p>
-      <span class="comment">
-        <%= @problem.comment %>
-      </span>
-      <%= render "shared/solutions" %>
-      <%= link_to "New Solution", new_problem_solution_path(@problem) %>
-  </tr>
-</table>
+Back to <%= link_to "Problems", root_path %>
+<ul class="problems" summary="User problems">
+    <%= render 'shared/problem_item', :problem_item => @problem %>
+</ul>
+<%= form_for @problem, :url => {:action => 'questions'}, :method => :put do |f| %>
+    <ul id="questions">
+        <% unless @questions.empty? %>
+          <% @questions.each do |question| %>
+            <%= fields_for "question[]", question do |builder| %>
+              <%= render 'shared/error_messages', :object => builder.object %>
+              <%= render "question_fields", :f => builder %>
+            <% end %>
+          <% end %>
+        <% end %>
+    </ul>
+    <div class="actions">
+      <%= f.submit "Submit" %>
+    </div>
+<% end %>

@@ -59,7 +59,10 @@ class SolutionsController < ApplicationController
     if errors.empty?
       redirect_to @problem, :flash => { :success => "Answers updated." }
     else
-
+      @title = @solution.name
+      @questions = @solution.problem.questions
+      #TODO - don't think this is right
+      @answers = params[:answer]
       render :show
     end
     #TODO - need to handle failures due to validation -- wrap this in a transaction?? needs to give user feedback via the error flash message

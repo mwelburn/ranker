@@ -5,6 +5,9 @@ class Problem < ActiveRecord::Base
   has_many :solutions, :dependent => :destroy
   has_many :questions, :dependent => :destroy
 
+  accepts_nested_attributes_for :questions,
+                                :allow_destroy => true
+
   validates :name, :presence => true,
                   :length => { :maximum => 75 },
                   :uniqueness => { :scope => :user_id }
@@ -47,6 +50,22 @@ class Problem < ActiveRecord::Base
         solution.validate_solution
       end
     end
+  end
+
+  def update_questions(questions)
+    errors = {}
+    questions.each do |question_id, question_attrs|
+      question = self.questions.find_by_id(question_id)
+      if question.blank?
+        #TODO - how will we validate this and return error messages accordingly?
+        self.questions.create!(question_attrs)
+      else
+        unless question.update_attributes(question_attrs)
+          errors[question_id] = question.errors
+        end
+      end
+    end
+    errors
   end
 
 end

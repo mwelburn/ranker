@@ -12,5 +12,5 @@ module ApplicationHelper
   def logo
     image_tag("logo.png", :alt => "Ranker", :class => "round")
   end
-  
+
 end

@@ -2,7 +2,7 @@
   <div id='<%= "problem_#{problem_item.id}" %>' class="problem round">
     <div class="information">
     <h2>
-      <%= link_to problem_item.name, problem_item %>
+      <%= link_to problem_item.name, problem_item %>&nbsp;<%= link_to "(edit)", edit_problem_path(problem_item) %>
     </h2>
     <!-- TODO - need to deal with wrapping long comments -->
     <h3 class="problem_comment">
@@ -26,7 +26,7 @@
           <div class="clear"/>
           <script type="text/javascript">
             $('#<%= "toggle_solutions_#{problem_item.id}" %>').click(function() {
-              $('#<%= "solutions_#{problem_item.id}" %>').slideToggle('slow', function() {
+              $('#<%= "solutions_#{problem_item.id}" %>').slideToggle('normal', function() {
                 // Animation complete.
                 var $solution_span = $('#<%= "toggle_solutions_#{problem_item.id}" %>');
 

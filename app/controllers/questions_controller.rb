@@ -1,17 +1,7 @@
 class QuestionsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :load_problem, :only => [:index, :new, :create]
-  before_filter :load_question, :except => [:index, :new, :create]
-
-  def index
-    @questions = @problem.questions
-    @title = "All questions"
-  end
-
-  def new
-    @question = @problem.questions.new
-    @title = "New question"
-  end
+  before_filter :load_problem, :only => [ :create ]
+  before_filter :load_question, :except => [ :create ]
 
   def create
     @question = @problem.questions.build(params[:question])
@@ -29,14 +19,6 @@ class QuestionsController < ApplicationController
     else
       redirect_to @question, :flash => { :failure => "Error deleting question"}
     end
-  end
-
-  def show
-    @title = @question.text
-  end
-
-  def edit
-    @title = "Edit question"
   end
 
   def update
