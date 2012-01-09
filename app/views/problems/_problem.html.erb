@@ -1,8 +1,0 @@
-<li>
-  <%= link_to problem.name, problem %>
-  <span class="comment">
-    <%= problem.comment %>
-  </span>
-  <%= link_to "delete", problem, :method => :delete, :confirm => "You sure?",
-                              :title => "Delete #{problem.name}" %>
-</li>

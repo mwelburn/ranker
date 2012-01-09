@@ -288,3 +288,64 @@ ul.answers {
   height: 50px;
   width: 95%;
 }
+
+div.no_margin {
+    margin: 0;
+}
+
+/* devise */
+body {
+    font:12px/1.3 Arial, Sans-serif;
+}
+
+form {
+    width:380px;
+    padding:0 90px 20px;
+    margin:auto;
+    background:#f7f7f7;
+    border:1px solid #ddd;
+}
+
+div {
+    clear:both;
+    position:relative;
+    margin:0 0 10px;
+}
+
+label {
+    display:block;
+}
+
+input[type="text"], input[type="email"], input[type="password"], textarea {
+    width:300px;
+    border:1px solid #999;
+    padding:5px;
+    -moz-border-radius:4px;
+}
+
+textarea {
+    height: 50px;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, textarea:focus {
+    border-color:#777;
+}
+
+
+/* submit button */
+input[type="submit"] {
+    cursor:pointer;
+    border:1px solid #999;
+    padding:5px;
+    -moz-border-radius:4px;
+    background:#eee;
+}
+
+input[type="submit"]:hover, input[type="submit"]:focus {
+    border-color:#333;
+    background:#ddd;
+}
+
+input[type="submit"]:active {
+    margin-top:1px;
+}

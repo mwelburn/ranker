@@ -1,2 +1,15 @@
-<h1>Edit problem</h1>
-<%= render 'shared/problem_form' %>
+<%= form_for @problem do |problem_form| %>
+  <h2>Edit Problem</h2>
+  <%= render 'shared/error_messages', :object => problem_form.object %>
+  <div class="field">
+    <%= problem_form.label :name %>
+	<%= problem_form.text_field :name %>
+  </div>
+  <div class="field">
+    <%= problem_form.label :comment %>
+	<%= problem_form.text_field :comment %>
+  </div>
+  <div class="actions">
+	<%= problem_form.submit "Update" %>
+  </div>
+<% end %>
