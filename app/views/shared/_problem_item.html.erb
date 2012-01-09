@@ -1,5 +1,5 @@
 <li>
-  <div id='<%= "problem_#{problem_item.id}" %>' class="problem round">
+  <div id='<%= "problem_#{problem_item.id}" %>' class="no_margin problem round">
     <div class="information">
     <h2>
       <%= link_to problem_item.name, problem_item %>&nbsp;<%= link_to "(edit)", edit_problem_path(problem_item) %>
@@ -15,6 +15,7 @@
       <ul id='<%= "solutions_#{problem_item.id}" %>'>
         <%= render :partial => 'shared/problem_solution_item', :collection => problem_item.solutions %>
       </ul>
+    <% end %>
       <ul>
         <li class="problem_solution round_bottom hide_solutions">
           <span class="left">
@@ -40,6 +41,5 @@
           </script>
         </li>
       </ul>
-    <% end %>
   </div>
 </li>
