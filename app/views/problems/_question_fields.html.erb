@@ -1,18 +1,16 @@
 <li class="question" id="question_<%= f.object.id %>">
-  <span class="question_text">
+  <div class="field">
     <%= f.label :text, "Question" %>
     <%= f.text_field :text, :id => "question_text_#{f.object.id}" %>
-  </span>
-  <span class="information">
-    <div class="weight round_top">
-      <%= f.label :weight %>
-      <%= f.radio_button :weight, 1 %>1
-      <%= f.radio_button :weight, 2 %>2
-      <%= f.radio_button :weight, 3 %>3
-      <%= f.radio_button :weight, 4 %>4
-      <%= f.radio_button :weight, 5 %>5
-    </div>
-  </span>
+  </div>
+  <div class="field">
+    <%= f.label :weight %>
+    <%= f.radio_button :weight, 1 %>1
+    <%= f.radio_button :weight, 2 %>2
+    <%= f.radio_button :weight, 3 %>3
+    <%= f.radio_button :weight, 4 %>4
+    <%= f.radio_button :weight, 5 %>5
+  </div>
   <%= f.hidden_field :position %>
   <%= f.hidden_field :_destroy, :id => "destroy_#{f.object.id}" %>
   <%= f.link_to_remove "Delete" %>

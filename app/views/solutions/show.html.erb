@@ -25,9 +25,10 @@
 <ul class="answers">
   <%= form_for @solution, :url => {:action => 'answers'}, :method => :put do |f| %>
     <% unless @answers.empty? %>
-        <%= f.fields_for :answers do |builder| %>
+        <%= f.fields_for :answers, @answers.sort_by {|answer| answer.question.position} do |builder| %>
           <%= render 'shared/error_messages', :object => builder.object %>
           <%= render "answer_fields", :f => builder %>
+          <hr/>
         <% end %>
       <div class="actions">
         <%= f.submit "Submit" %>

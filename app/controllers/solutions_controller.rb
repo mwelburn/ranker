@@ -38,6 +38,7 @@ class SolutionsController < ApplicationController
       end
     end
 
+    # sort doesn't do anything for the form since the form is unsorted
     @answers = @solution.answers.sort_by {|answer| answer.question.position}
   end
 
