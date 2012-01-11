@@ -243,50 +243,11 @@ ul.problems {
 
 /* answers */
 
-ul.answers {
-
-}
-
 .answers li {
   margin-top: 1em;
   list-style: none;
   width: 100%;
   display: block;
-}
-
-.answers li span.question_text {
-  float: left;
-}
-
-.answers li span.information {
-  float: right;
-  width: 40%;
-}
-
-.answers li span div {
-  border: 1px solid #000;
-  background-color: #FFD373;
-  padding: 0px 5px;
-}
-
-.answers li span div.rating {
-}
-
-.answers li span div.comment, .answers li span div.toggle_comment {
-  border-top: 0px;
-}
-
-.answers li span div.toggle_comment {
-  text-align: right;
-}
-
-.answers li span div.toggle_comment:hover {
-  cursor: pointer;
-}
-
-.answers li span div.comment textarea {
-  height: 50px;
-  width: 95%;
 }
 
 div.no_margin {
@@ -348,4 +309,20 @@ input[type="submit"]:hover, input[type="submit"]:focus {
 
 input[type="submit"]:active {
     margin-top:1px;
+}
+
+/* questions */
+
+#questions li {
+  list-style: none;
+  margin: 10px 0;
+}
+
+div.toggle_comment {
+    /* make this look more like something clickable */
+    border: 1px;
+}
+
+div.toggle_comment:hover {
+  cursor: pointer;
 }
