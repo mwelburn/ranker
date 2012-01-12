@@ -18,8 +18,9 @@ class SolutionsController < ApplicationController
   end
 
   def destroy
+    name = @solution.name
     if @solution.destroy
-      redirect_to problem_solutions_path(@problem), :flash => { :success => "Solution deleted" }
+      redirect_to problem_path(@problem), :flash => { :success => "#{name} deleted" }
     else
       redirect_to @solution, :flash => { :failure => "Error deleting solution"}
     end

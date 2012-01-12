@@ -37,8 +37,9 @@ class ProblemsController < ApplicationController
   end
 
   def destroy
+    name = @problem.name
     if @problem.destroy
-      redirect_to problems_path, :flash => { :success => "Problem deleted" }
+      redirect_to problems_path, :flash => { :success => "#{name} deleted" }
     else
       redirect_to @problem, :flash => { :failure => "Error deleting problem"}
     end
