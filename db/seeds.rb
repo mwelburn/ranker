@@ -5,3 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+require File.expand_path('../seed/user_seed', __FILE__)
+require File.expand_path('../seed/residency_seed', __FILE__)
+
+p "In seeds.rb"

@@ -4,6 +4,7 @@ Ranker::Application.routes.draw do
   resources :problems do
     member do
       put 'questions'
+      get 'copy'
     end
     resources :questions, :only => [ :create ]
     resources :solutions, :only => [ :new, :create ]

@@ -1,6 +1,6 @@
 class ProblemsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :load_problem, :except => [:index, :new, :create]
+  before_filter :load_problem, :except => [:index, :new, :create, :copy]
 
   def index
     @problems = current_user.problems
@@ -15,10 +15,25 @@ class ProblemsController < ApplicationController
   def create
     @problem = current_user.problems.build(params[:problem])
     if @problem.save
-      redirect_to @problem, :flash => { :success => "Problem created!" }
+      if @problem.has_template_id?
+        @problem.copy_template_questions
+        redirect_to @problem, :flash => { :success => "Template copied!" }
+      else
+        redirect_to @problem, :flash => { :success => "Problem created!" }
+      end
     else
       render :new
     end
+  end
+
+  def copy
+    template = Problem.find_by_id_and_is_template(params[:id], true)
+    if template.blank?
+      redirect_to "pages/home", :flash => { :failure => "Template does not exist" }
+    end
+    @problem = current_user.problems.build(template.attributes.merge(:is_template => false, :template_id => template.id))
+    @title = "Copy Template"
+    render :new
   end
 
   def destroy

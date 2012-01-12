@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
                    :length => { :maximum => 50 }
 
   has_many :problems, :dependent => :destroy
+  has_many :templates, :dependent => :destroy, :class_name => "Problem", :conditions => { :is_template => true }
 
   default_scope :order => 'users.created_at DESC'
 end
