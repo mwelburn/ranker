@@ -29,6 +29,8 @@ ActiveRecord::Schema.define(:version => 20111212020917) do
     t.string   "name"
     t.string   "comment"
     t.integer  "question_total", :default => 0
+    t.boolean  "is_template",    :default => false
+    t.integer  "template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

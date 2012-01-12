@@ -1,5 +1,5 @@
 class Problem < ActiveRecord::Base
-  attr_accessible :name, :comment, :questions_attributes
+  attr_accessible :name, :comment, :questions_attributes, :template_id, :is_template
 
   belongs_to :user
   has_many :solutions, :dependent => :destroy
@@ -13,6 +13,28 @@ class Problem < ActiveRecord::Base
   validates :user_id, :presence => true
 
   default_scope :order => 'problems.created_at DESC'
+
+  def is_template?
+    self.is_template
+  end
+
+  def has_template_id?
+    self.template_id?.present?
+  end
+
+  def copy_template_questions
+    if self.has_template_id?
+      if template = Problem.find_by_id(self.template_id) and template.is_template?
+        template.questions.each do |question|
+          self.questions.create!(:text => question.text, :position => question.position, :weight => question.weight)
+        end
+      else
+        logger.info "Problem #{self.template_id} either does not exist or is not a template."
+      end
+    else
+      logger.info "Problem #{self.id} does not point to a template"
+    end
+  end
 
   def question_potential
     self.question_total * 5

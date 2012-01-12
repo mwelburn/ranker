@@ -1,6 +1,7 @@
 <% if user_signed_in? %>
   <div class="main">
     <%= link_to "New Problem?", new_problem_path %>
+    <%= link_to "Start with Residency template!", copy_problem_path(1) %>
     <%= render 'shared/problems' %>
   </div>
 <% else %>

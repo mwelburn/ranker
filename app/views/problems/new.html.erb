@@ -9,6 +9,8 @@
     <%= problem_form.label :comment %>
 	<%= problem_form.text_field :comment %>
   </div>
+  <%= problem_form.hidden_field :is_template %>
+  <%= problem_form.hidden_field :template_id %>
   <div class="actions">
 	<%= problem_form.submit "Submit" %>
   </div>
