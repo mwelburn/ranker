@@ -1,17 +1,17 @@
-<%= form_for @problem do |problem_form| %>
+<%= form_for @problem do |f| %>
   <h2>New Problem</h2>
-  <%= render 'shared/error_messages', :object => problem_form.object %>
+  <%= render 'shared/error_messages', :object => f.object %>
   <div class="field">
-    <%= problem_form.label :name %>
-	<%= problem_form.text_field :name %>
+    <%= f.label :name %>
+	<%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= problem_form.label :comment %>
-	<%= problem_form.text_field :comment %>
+    <%= f.label :comment %>
+	<%= f.text_field :comment %>
   </div>
-  <%= problem_form.hidden_field :is_template %>
-  <%= problem_form.hidden_field :template_id %>
+  <%= f.hidden_field :is_template %>
+  <%= f.hidden_field :template_id %>
   <div class="actions">
-	<%= problem_form.submit "Submit" %>
+	<%= f.submit "Submit" %>
   </div>
 <% end %>
