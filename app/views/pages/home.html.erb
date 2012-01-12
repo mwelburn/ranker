@@ -1,7 +1,7 @@
 <% if user_signed_in? %>
   <div class="main">
-    <%= link_to "New Problem?", new_problem_path %>
-    <%= link_to "Start with Residency template!", copy_problem_path(1) %>
+    <%= link_to "New Problem?", new_problem_path, :class => "new_problem_button round left" %>
+    <%= link_to "Start with Residency template!", copy_problem_path(1), :class => "template_button round right" %>
     <%= render 'shared/problems' %>
   </div>
 <% else %>
