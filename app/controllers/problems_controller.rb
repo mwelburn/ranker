@@ -16,6 +16,7 @@ class ProblemsController < ApplicationController
     @problem = current_user.problems.build(params[:problem])
     if @problem.save
       if @problem.has_template_id?
+        #TODO - handle failure of copy template questions better. Redirect to problem show and build up the questions and let them save?
         @problem.copy_template_questions
         redirect_to @problem, :flash => { :success => "Template copied!" }
       else
