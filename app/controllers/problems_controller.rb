@@ -2,11 +2,6 @@ class ProblemsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :load_problem, :except => [:index, :new, :create, :copy]
 
-  def index
-    @problems = current_user.problems
-    @title = "Problems"
-  end
-
   def new
     @problem = current_user.problems.new
     @title = "New problem"
@@ -16,6 +11,7 @@ class ProblemsController < ApplicationController
     @problem = current_user.problems.build(params[:problem])
     if @problem.save
       if @problem.has_template_id?
+        #TODO - handle failure of copy template questions better. Redirect to problem show and build up the questions and let them save?
         @problem.copy_template_questions
         redirect_to @problem, :flash => { :success => "Template copied!" }
       else
@@ -39,7 +35,7 @@ class ProblemsController < ApplicationController
   def destroy
     name = @problem.name
     if @problem.destroy
-      redirect_to problems_path, :flash => { :success => "#{name} deleted" }
+      redirect_to "pages/home", :flash => { :success => "#{name} deleted" }
     else
       redirect_to @problem, :flash => { :failure => "Error deleting problem"}
     end

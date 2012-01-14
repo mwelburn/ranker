@@ -3,6 +3,7 @@
     <%= link_to "New Problem?", new_problem_path, :class => "new_problem_button round left" %>
     <%= link_to "Start with Residency template!", copy_problem_path(1), :class => "template_button round right" %>
     <%= render 'shared/problems' %>
+    <div class="clear"></div>
   </div>
 <% else %>
   <h1>Got a problem? Solve it.</h1>
