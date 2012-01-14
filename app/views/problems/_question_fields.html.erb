@@ -1,7 +1,7 @@
 <li class="question" id="question_<%= f.object.id %>">
   <div class="field">
     <%= f.label :text, "Question" %>
-    <%= f.text_field :text, :id => "question_text_#{f.object.id}" %>
+    <%= f.text_area :text, :id => "question_text_#{f.object.id}" %>
   </div>
   <div class="field">
     <%= f.label :weight %>
