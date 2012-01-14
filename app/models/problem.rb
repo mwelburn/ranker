@@ -26,9 +26,20 @@ class Problem < ActiveRecord::Base
 
   def copy_template_questions
     if self.has_template_id?
+      categories = Hash.new()
+
       if template = Problem.find_by_id(self.template_id) and template.is_template?
         template.questions.each do |question|
-          self.questions.create!(:text => question.text, :position => question.position, :weight => question.weight)
+          if question.category.id
+            category_id = categories[question.category_id]
+            if category_id.blank?
+              category = self.categories.create!(:name => question.category.name, :comment => question.category.comment, :position => question.category.position)
+              categories[question.category_id] = category_id = category.id
+            end
+            self.questions.create!(:text => question.text, :position => question.position, :weight => question.weight, :category_id => category_id)
+          else
+            self.questions.create!(:text => question.text, :position => question.position, :weight => question.weight)
+          end
         end
       else
         logger.info "Problem #{self.template_id} either does not exist or is not a template."
