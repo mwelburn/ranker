@@ -1,7 +1,7 @@
 <li class="question" id="question_<%= f.object.id %>">
   <div class="field">
     <%= f.label :text, "Question" %>
-    <%= f.text_field :text, :id => "question_text_#{f.object.id}" %>
+    <%= f.text_area :text, :id => "question_text_#{f.object.id}" %>
   </div>
   <div class="field">
     <%= f.label :weight %>
@@ -10,6 +10,10 @@
     <%= f.radio_button :weight, 3 %>3
     <%= f.radio_button :weight, 4 %>4
     <%= f.radio_button :weight, 5 %>5
+  </div>
+  <div class="field">
+    <%= f.label :category_id %>
+    <%= f.select(:category_id, @problem.categories.collect {|p| [ p.name, p.id ] }, {:include_blank => ""}) %>
   </div>
   <%= f.hidden_field :position %>
   <%= f.hidden_field :_destroy, :id => "destroy_#{f.object.id}" %>

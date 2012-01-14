@@ -238,7 +238,7 @@ ul.problems {
 .hide_solutions {
   text-align: right;
   padding: 0 25px;
-  background-color: #FF4E40;
+  background-color: #FFD373;
 }
 
 .hide_solutions:hover {
@@ -247,11 +247,20 @@ ul.problems {
 
 /* answers */
 
+.answers {
+  border: 1px solid #ddd;
+  padding-right: 1.5em;
+}
+
 .answers li {
   margin-top: 1em;
   list-style: none;
   width: 100%;
   display: block;
+}
+
+.answers h3 {
+  margin-top: 1em;
 }
 
 div.no_margin {
@@ -322,13 +331,37 @@ input[type="submit"]:active {
   margin: 10px 0;
 }
 
+.comment {
+  margin-bottom: 0px;
+}
+
 div.toggle_comment {
     /* make this look more like something clickable */
     border: 1px;
+    text-align: center;
+    background-color: #FF7D73;
 }
 
 div.toggle_comment:hover {
   cursor: pointer;
+}
+
+span.toggle_category {
+    font-size: 1em;
+    font-weight: normal;
+    text-align: center;
+    background-color:#FF7D73;
+    padding: 0px 5px;
+}
+
+span.toggle_category:hover {
+    cursor: pointer;
+}
+
+span.category_header {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 10px;
 }
 
 a.template_button {
@@ -339,7 +372,7 @@ a.template_button {
   text-align: center;
   width: 275px;
   color: #fff;
-  background: #ff0700;
+  background: #FF7D73;
   font-size: 125%;
   font-weight: bold;
   padding: 10px;
@@ -353,8 +386,21 @@ a.new_problem_button {
   text-align: center;
   width: 150px;
   color: #fff;
-  background: #ff0700;
+  background: #FF7D73;
   font-size: 125%;
   font-weight: bold;
   padding: 10px;
+}
+
+#header_name {
+    font-size: 3em;
+}
+
+#header_comment {
+    font-size: 1.25em;
+    width: 100%;
+}
+
+.edit_text {
+    font-size: .75em;
 }
