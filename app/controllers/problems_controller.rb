@@ -2,11 +2,6 @@ class ProblemsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :load_problem, :except => [:index, :new, :create, :copy]
 
-  def index
-    @problems = current_user.problems
-    @title = "Problems"
-  end
-
   def new
     @problem = current_user.problems.new
     @title = "New problem"
@@ -40,7 +35,7 @@ class ProblemsController < ApplicationController
   def destroy
     name = @problem.name
     if @problem.destroy
-      redirect_to problems_path, :flash => { :success => "#{name} deleted" }
+      redirect_to "pages/home", :flash => { :success => "#{name} deleted" }
     else
       redirect_to @problem, :flash => { :failure => "Error deleting problem"}
     end
