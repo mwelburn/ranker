@@ -1,41 +1,66 @@
-<table class="solution" summary="Solution information">
-  <tr>
-	<td class="main">
-      <span>
-        Back to <%= link_to @problem.name, @problem %>
-      </span>
-      <span class="ranking">
-        <% if @solution.completed %>
-          <%= number_to_percentage(@solution.match_decimal * 100, :precision => 1) %>
-        <% else %>
-          INC
-        <% end %>
-      </span>
-	  <h1>
-  		<span id="name"><%= @solution.name %></span>
-        <%= link_to "Edit Solution", edit_solution_path(@solution) %>
-	  </h1>
-      <span class="comment">
-        <%= simple_format(@solution.comment) %>
-      </span>
-    </td>
-  </tr>
-</table>
+  <span>
+    Back to <%= link_to @problem.name, @problem %>
+  </span>
+  <br/>
+    <span id="header_name"><%= @solution.name %></span>
+  (<%= link_to "Edit", edit_solution_path(@solution) %>)
+  <% unless @solution.comment.blank? %>
+  <span id="header_comment">
+    <%= simple_format(@solution.comment) %>
+  </span>
+  <% end %>
 
-<ul class="answers">
-  <%= form_for @solution, :url => {:action => 'answers'}, :method => :put do |f| %>
-    <% unless @answers.empty? %>
-        <%= f.fields_for :answers, @answers.sort_by {|answer| answer.question.position} do |builder| %>
-          <%= render 'shared/error_messages', :object => builder.object %>
-          <%= render "answer_fields", :f => builder %>
-          <hr/>
+  <% unless @solution.problem.questions.blank? %>
+      <%= form_for @solution, :url => {:action => 'answers'}, :method => :put do |f| %>
+        <% unless @solution.problem.categories.blank? %>
+           <% @solution.problem.categories.each do |category| %>
+              <% unless @solution.answers_by_category_id(category.id).empty? %>
+                  <span class="category_header"><%= category.name %></span>&nbsp;<span class="round toggle_category" id="category_<%=category.id%>">Hide</span>
+                  <ul class="answers" id="answers_category_<%=category.id%>">
+                      <%= f.fields_for :answers, @solution.answers_by_category_id(category.id).sort_by {|answer| answer.question.position} do |builder| %>
+                        <%= render 'shared/error_messages', :object => builder.object %>
+                        <%= render "answer_fields", :f => builder %>
+                        <hr/>
+                      <% end %>
+                  </ul>
+                  <hr/>
+                  <div class="clear"></div>
+              <% end %>
+           <% end %>
         <% end %>
-      <div class="actions">
-        <%= f.submit "Submit" %>
-      </div>
-    <% end %>
+        <% unless @solution.answers_by_category_id(nil).blank? %>
+           <span class="category_header">Uncategorized</span>&nbsp;<span class="round toggle_category" id="category_none">Hide</span>
+           <ul class="answers" id="answers_category_none">
+               <%= f.fields_for :answers, @solution.answers_without_category.sort_by {|answer| answer.question.position} do |builder| %>
+                  <%= render 'shared/error_messages', :object => builder.object %>
+                  <%= render "answer_fields", :f => builder %>
+                  <hr/>
+                <% end %>
+            </ul>
+            <hr/>
+            <div class="clear"></div>
+        <% end %>
+        <div class="actions">
+          <%= f.submit "Submit" %>
+        </div>
+      <% end %>
     <% if @answers.empty? %>
       No questions exist. Create questions <%= link_to "here", problem_questions_path(@problem) %>
     <% end %>
   <% end %>
-</ul>
+
+
+          <script type="text/javascript">
+            $('.<%= "toggle_category" %>').click(function() {
+                $("#answers_" + this.id).slideToggle('normal', function() {
+                // Animation complete.
+                var $header = $("#" + this.id.substring(8));
+
+                if ($header.text().trim() == "Hide") {
+                  $header.text("Show");
+                } else {
+                  $header.text("Hide");
+                }
+              });
+            });
+          </script>

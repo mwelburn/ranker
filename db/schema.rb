@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111212020917) do
+ActiveRecord::Schema.define(:version => 20120114194641) do
 
   create_table "answers", :force => true do |t|
     t.integer  "question_id"
@@ -23,6 +23,18 @@ ActiveRecord::Schema.define(:version => 20111212020917) do
   end
 
   add_index "answers", ["question_id"], :name => "index_answers_on_question_id"
+  add_index "answers", ["solution_id"], :name => "index_answers_on_solution_id"
+
+  create_table "categories", :force => true do |t|
+    t.string   "name"
+    t.string   "comment"
+    t.integer  "position"
+    t.integer  "problem_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "categories", ["problem_id"], :name => "index_categories_on_problem_id"
 
   create_table "problems", :force => true do |t|
     t.integer  "user_id"
@@ -42,10 +54,12 @@ ActiveRecord::Schema.define(:version => 20111212020917) do
     t.integer  "position"
     t.string   "text"
     t.integer  "weight"
+    t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "questions", ["category_id"], :name => "index_questions_on_category_id"
   add_index "questions", ["problem_id"], :name => "index_questions_on_problem_id"
 
   create_table "solutions", :force => true do |t|

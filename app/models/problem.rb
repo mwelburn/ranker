@@ -1,11 +1,13 @@
 class Problem < ActiveRecord::Base
-  attr_accessible :name, :comment, :questions_attributes, :template_id, :is_template
+  attr_accessible :name, :comment, :categories_attributes, :questions_attributes, :template_id, :is_template
 
   belongs_to :user
   has_many :solutions, :dependent => :destroy
   has_many :questions, :dependent => :destroy
+  has_many :categories, :dependent => :destroy
 
   accepts_nested_attributes_for :questions, :allow_destroy => true
+  accepts_nested_attributes_for :categories, :allow_destroy => true
 
   validates :name, :presence => true,
                   :length => { :maximum => 75 },
@@ -45,6 +47,18 @@ class Problem < ActiveRecord::Base
 
     pos = 0
     self.questions.each do |q|
+      if q.position > pos
+        pos = q.position
+      end
+    end
+    pos + 1
+  end
+
+  def new_category_position
+    1 unless self.categories
+
+    pos = 0
+    self.categories.each do |q|
       if q.position > pos
         pos = q.position
       end

@@ -59,4 +59,24 @@ class Solution < ActiveRecord::Base
       self.answer_total.to_f / self.problem.question_potential
     end
   end
+
+  def answers_without_category
+    answers_by_category_id(nil)
+  end
+
+  def answers_by_category_id(id)
+    questions = self.problem.questions.find_all_by_category_id(id)
+    if (questions.blank?)
+      []
+    end
+
+    answers = []
+    questions.each do |question|
+      answer = self.answers.find_by_question_id(question.id)
+      unless answer.blank?
+        answers << answer
+      end
+    end
+    answers
+  end
 end

@@ -1,8 +1,9 @@
 class Question < ActiveRecord::Base
-  attr_accessible :text, :weight, :position
+  attr_accessible :text, :weight, :position, :category_id
   before_validation :default_values
 
   belongs_to :problem
+  belongs_to :category
   has_many :answers, :dependent => :destroy
 
   validates :text, :presence => true,

@@ -10,5 +10,6 @@ class CreateAnswers < ActiveRecord::Migration
     end
 
     add_index :answers, :question_id
+    add_index :answers, :solution_id
   end
 end

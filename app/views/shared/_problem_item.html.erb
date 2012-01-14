@@ -2,7 +2,7 @@
   <div id='<%= "problem_#{problem_item.id}" %>' class="no_margin problem round">
     <div class="information">
     <h2>
-      <%= link_to problem_item.name, problem_item %>&nbsp;<%= link_to "(edit)", edit_problem_path(problem_item) %>
+      <%= link_to problem_item.name, problem_item %>&nbsp;<%= link_to "(edit)", edit_problem_path(problem_item), :class => "edit_text" %>
     </h2>
     <!-- TODO - need to deal with wrapping long comments -->
     <h3 class="problem_comment">
