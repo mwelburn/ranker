@@ -15,8 +15,4 @@ class Answer < ActiveRecord::Base
 
   default_scope :order => 'answers.created_at DESC'
 
-  def position
-    self.question.position
-  end
-
 end

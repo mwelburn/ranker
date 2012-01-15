@@ -21,7 +21,7 @@ class Question < ActiveRecord::Base
                                       }
   validates :problem_id, :presence => true
 
-  default_scope :order => 'questions.problem_id ASC, questions.position ASC'
+  default_scope :order => 'questions.problem_id ASC, questions.category_id ASC, questions.position ASC'
 
   private
 

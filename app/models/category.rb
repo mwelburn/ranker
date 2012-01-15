@@ -16,7 +16,7 @@ class Category < ActiveRecord::Base
 
   validates :problem_id, :presence => true
 
-  default_scope :order => 'categories.position ASC'
+  default_scope :order => 'categories.problem_id ASC, categories.position ASC'
 
   private
 
