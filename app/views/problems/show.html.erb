@@ -11,16 +11,34 @@
 </ul>
 <div id="question-list">
     <%= form_for @problem, :url => {:action => 'questions'}, :html => {:class => "form-stacked"}, :method => :put do |f| %>
-        <ul class="questions">
-            <% unless @questions.empty? %>
-                <%= f.fields_for :questions do |builder| %>
+      <% unless @problem.categories.blank? %>
+         <% @problem.categories.each do |category| %>
+            <% unless @problem.questions_by_category_id(category.id).empty? %>
+                <h3><%= category.name %>&nbsp;<span class="btn toggle-category" id="category_<%=category.id%>">Hide</span></h3>
+                  <ul class="questions">
+                    <% unless @questions.empty? %>
+                        <%= f.fields_for :questions do |builder| %>
+                          <%= render 'shared/error_messages', :object => builder.object %>
+                          <%= render "question_fields", :f => builder %>
+                        <% end %>
+                    <% end %>
+                    <%= add_child_link "Add Question", :questions, :category_id => category.id %>
+                    <%= new_child_fields_template f, :questions, {:partial => "question_fields", :category_id => category.id} %>
+                  </ul>
+            <% end %>
+          <% end %>
+        <% end %>
+        <% unless @problem.questions_by_category_id(nil).blank? %>
+           <h3>Uncategorized</span>&nbsp;<span class="btn toggle_category" id="category_none">Hide</span></h3>
+           <ul class="questions" id="answers_category_none">
+               <%= f.fields_for :questions, @problem.questions_without_category.sort_by {|question| question.position} do |builder| %>
                   <%= render 'shared/error_messages', :object => builder.object %>
                   <%= render "question_fields", :f => builder %>
                 <% end %>
-            <% end %>
-            <%= add_child_link "Add Question", :questions %>
-            <%= new_child_fields_template f, :questions, :partial => "question_fields" %>
-        </ul>
+                <%= add_child_link "Add Question", :questions, :category_id => nil %>
+                <%= new_child_fields_template f, :questions, {:partial => "question_fields", :category_id => nil} %>
+            </ul>
+        <% end %>
         <div class="well">
             <%= f.submit "Submit", :class => "btn large primary span2" %>
             <%= link_to "Cancel", problem_path(@problem), :class => "btn large danger" %>

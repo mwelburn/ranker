@@ -24,19 +24,17 @@
                         <%= render "answer_fields", :f => builder %>
                       <% end %>
                   </ul>
-                  <div class="clear"></div>
               <% end %>
            <% end %>
         <% end %>
         <% unless @solution.answers_by_category_id(nil).blank? %>
-           <h3>Uncategorized</span>&nbsp;<span class="btn toggle_category" id="category_none">Hide</span></h3>>
+           <h3>Uncategorized</span>&nbsp;<span class="btn toggle_category" id="category_none">Hide</span></h3>
            <ul class="answers" id="answers_category_none">
                <%= f.fields_for :answers, @solution.answers_without_category.sort_by {|answer| answer.question.position} do |builder| %>
                   <%= render 'shared/error_messages', :object => builder.object %>
                   <%= render "answer_fields", :f => builder %>
                 <% end %>
             </ul>
-            <div class="clear"></div>
         <% end %>
         <div class="well">
 	        <%= f.submit "Update", :class => "btn large primary span2" %>

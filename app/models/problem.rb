@@ -114,4 +114,17 @@ class Problem < ActiveRecord::Base
     errors
   end
 
+  def questions_without_category
+    questions_by_category_id(nil)
+  end
+
+  def questions_by_category_id(id)
+    questions = self.questions.find_all_by_category_id(id)
+    if (questions.blank?)
+      []
+    end
+
+    questions
+  end
+
 end

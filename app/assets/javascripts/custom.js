@@ -1,7 +1,8 @@
 $(function() {
   $('form a.add_child').click(function() {
     var association = $(this).attr('data-association');
-    var template = $('#' + association + '_fields_template').html();
+    var category_id = $(this).attr('category_id');
+    var template = $('#' + association + '_fields_template_' + category_id).html();
     var regexp = new RegExp('new_' + association, 'g');
     var new_id = new Date().getTime();
 
