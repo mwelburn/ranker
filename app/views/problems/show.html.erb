@@ -6,48 +6,44 @@
 <ul class="problems" summary="User problems">
     <%= render 'shared/problem_item', :problem_item => @problem %>
 </ul>
-<ul>
-  <button id="toggle-question-list" class="btn" data-toggle="toggle">Show Questions</button>
-</ul>
 <div id="question-list">
     <%= form_for @problem, :url => {:action => 'questions'}, :html => {:class => "form-stacked"}, :method => :put do |f| %>
       <% unless @problem.categories.blank? %>
          <% @problem.categories.each do |category| %>
             <% unless @problem.questions_by_category_id(category.id).empty? %>
-                <h3><%= category.name %>&nbsp;<span class="btn toggle-category" id="category_<%=category.id%>">Hide</span></h3>
-                  <ul class="questions">
-                    <%= f.fields_for :questions, @problem.questions_by_category_id(category.id) do |builder| %>
-                      <%= render 'shared/error_messages', :object => builder.object %>
-                      <%= render "question_fields", :f => builder %>
-                    <% end %>
-                    <%= add_child_link "Add Question", :questions, :category_id => category.id %>
-                    <%= new_child_fields_template f, :questions, {:partial => "question_fields", :category_id => category.id} %>
-                  </ul>
+                  <div class="category-section round">
+                      <h3><%= category.name %>&nbsp;<span class="btn toggle-category" id="category_<%=category.id%>">Show Questions</span></h3>
+                      <ul class="questions" id="questions_category_<%= category.id %>">
+                        <%= f.fields_for :questions, @problem.questions_by_category_id(category.id) do |builder| %>
+                          <%= render 'shared/error_messages', :object => builder.object %>
+                          <%= render "question_fields", :f => builder %>
+                        <% end %>
+                        <%= add_child_link "Add Question", :questions, :category_id => category.id %>
+                        <%= new_child_fields_template f, :questions, {:partial => "question_fields", :category_id => category.id} %>
+                      </ul>
+                  </div>
             <% end %>
           <% end %>
         <% end %>
-        <% unless @problem.questions_without_category.blank? %>
-           <h3>Uncategorized</span>&nbsp;<span class="btn toggle_category" id="category_none">Hide</span></h3>
-           <ul class="questions" id="answers_category_none">
-               <%= f.fields_for :questions, @problem.questions_without_category do |builder| %>
-                  <%= render 'shared/error_messages', :object => builder.object %>
-                  <%= render "question_fields", :f => builder %>
+        <div class="category-section round">
+           <h3>Uncategorized</span>&nbsp;<span class="btn toggle-category" id="category_none">Show Questions</span></h3>
+           <ul class="questions" id="questions_category_none">
+               <% unless @problem.questions_without_category.blank? %>
+                   <%= f.fields_for :questions, @problem.questions_without_category do |builder| %>
+                      <%= render 'shared/error_messages', :object => builder.object %>
+                      <%= render "question_fields", :f => builder %>
+                    <% end %>
+               <% end %>
+               <% if @problem.questions.blank? %>
+                     <%= f.fields_for :questions, @problem.questions.build do |builder| %>
+                      <%= render 'shared/error_messages', :object => builder.object %>
+                      <%= render "question_fields", :f => builder %>
+                    <% end %>
                 <% end %>
                 <%= add_child_link "Add Question", :questions, :category_id => nil %>
                 <%= new_child_fields_template f, :questions, {:partial => "question_fields", :category_id => nil} %>
             </ul>
-        <% end %>
-        <% if @problem.questions.blank? %>
-           <h3>Uncategorized</span>&nbsp;<span class="btn toggle_category" id="category_none">Hide</span></h3>
-           <ul class="questions" id="answers_category_none">
-               <%= f.fields_for :questions, @problem.questions.build do |builder| %>
-                  <%= render 'shared/error_messages', :object => builder.object %>
-                  <%= render "question_fields", :f => builder %>
-                <% end %>
-                <%= add_child_link "Add Question", :questions, :category_id => nil %>
-                <%= new_child_fields_template f, :questions, {:partial => "question_fields", :category_id => nil} %>
-            </ul>
-        <% end %>
+        </div>
         <div class="well">
             <%= f.submit "Submit", :class => "btn large primary span2" %>
             <%= link_to "Cancel", problem_path(@problem), :class => "btn large danger" %>
@@ -61,19 +57,20 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
-     //begin by hiding questions
-     $("#question-list").hide();
+     $(".questions").hide();
 
-     //toggle whether shown
-     $("#toggle-question-list").click(function(){
-         if ($(this).html() == "Show Questions") {
-             $("#question-list").slideDown();
-             $(this).html("Hide Questions");
-         } else {
-             $("#question-list").slideUp();
-             $(this).html("Show Questions");
-         }
-     });
+    $(".toggle-category").click(function() {
+        $("#questions_" + this.id).slideToggle('normal', function() {
+        // Animation complete.
+        var $header = $("#" + this.id.substring(10));
+console.log($header.text())
+        if ($header.text().trim() == "Hide Questions") {
+          $header.text("Show Questions");
+        } else {
+          $header.text("Hide Questions");
+        }
+      });
+    });
 
   });
 </script>

@@ -80,6 +80,12 @@ li.answer {
     margin-left: 5px;
 }
 
+.category-section {
+    border: 1px solid;
+    padding: 10px;
+    margin: 10px 0;
+}
+
 /* OLD STYLES */
 
 a.signup_button {

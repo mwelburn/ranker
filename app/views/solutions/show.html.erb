@@ -17,24 +17,28 @@
         <% unless @solution.problem.categories.blank? %>
            <% @solution.problem.categories.each do |category| %>
               <% unless @solution.answers_by_category_id(category.id).empty? %>
-                  <h3><%= category.name %>&nbsp;<span class="btn toggle-category" id="category_<%=category.id%>">Hide</span></h3>
-                  <ul class="answers" id="answers_category_<%=category.id%>">
-                      <%= f.fields_for :answers, @solution.answers_by_category_id(category.id).sort_by {|answer| answer.question.position} do |builder| %>
-                        <%= render 'shared/error_messages', :object => builder.object %>
-                        <%= render "answer_fields", :f => builder %>
-                      <% end %>
-                  </ul>
+                  <div class="category-section round">
+                      <h3><%= category.name %>&nbsp;<span class="btn toggle-category" id="category_<%=category.id%>">Hide</span></h3>
+                      <ul class="answers" id="answers_category_<%=category.id%>">
+                          <%= f.fields_for :answers, @solution.answers_by_category_id(category.id).sort_by {|answer| answer.question.position} do |builder| %>
+                            <%= render 'shared/error_messages', :object => builder.object %>
+                            <%= render "answer_fields", :f => builder %>
+                          <% end %>
+                      </ul>
+                  </div>
               <% end %>
            <% end %>
         <% end %>
         <% unless @solution.answers_by_category_id(nil).blank? %>
-           <h3>Uncategorized</span>&nbsp;<span class="btn toggle_category" id="category_none">Hide</span></h3>
-           <ul class="answers" id="answers_category_none">
-               <%= f.fields_for :answers, @solution.answers_without_category.sort_by {|answer| answer.question.position} do |builder| %>
-                  <%= render 'shared/error_messages', :object => builder.object %>
-                  <%= render "answer_fields", :f => builder %>
-                <% end %>
-            </ul>
+           <div class="category-section round">
+               <h3>Uncategorized</span>&nbsp;<span class="btn toggle-category" id="category_none">Hide</span></h3>
+               <ul class="answers" id="answers_category_none">
+                   <%= f.fields_for :answers, @solution.answers_without_category.sort_by {|answer| answer.question.position} do |builder| %>
+                      <%= render 'shared/error_messages', :object => builder.object %>
+                      <%= render "answer_fields", :f => builder %>
+                    <% end %>
+                </ul>
+            </div>
         <% end %>
         <div class="well">
 	        <%= f.submit "Update", :class => "btn large primary span2" %>
@@ -47,7 +51,7 @@
   <% end %>
 
           <script type="text/javascript">
-            $('.<%= "toggle-category" %>').click(function() {
+            $('.toggle-category').click(function() {
                 $("#answers_" + this.id).slideToggle('normal', function() {
                 // Animation complete.
                 var $header = $("#" + this.id.substring(8));
