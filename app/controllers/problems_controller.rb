@@ -25,7 +25,7 @@ class ProblemsController < ApplicationController
   def copy
     template = Problem.find_by_id_and_is_template(params[:id], true)
     if template.blank?
-      redirect_to "pages/home", :flash => { :failure => "Template does not exist" }
+      redirect_to root_path, :flash => { :failure => "Template does not exist" }
     end
     @problem = current_user.problems.build(template.attributes.merge(:is_template => false, :template_id => template.id))
     @title = "Copy Template"
@@ -35,7 +35,7 @@ class ProblemsController < ApplicationController
   def destroy
     name = @problem.name
     if @problem.destroy
-      redirect_to "pages/home", :flash => { :success => "#{name} deleted" }
+      redirect_to root_path, :flash => { :success => "#{name} deleted" }
     else
       redirect_to @problem, :flash => { :failure => "Error deleting problem"}
     end

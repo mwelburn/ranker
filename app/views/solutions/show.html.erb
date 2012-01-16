@@ -1,47 +1,46 @@
-  <span>
-    Back to <%= link_to @problem.name, @problem %>
-  </span>
-  <br/>
-    <span id="header_name"><%= @solution.name %></span>
-  (<%= link_to "Edit", edit_solution_path(@solution) %>)
+<ul class="breadcrumb">
+  <li><%= link_to "Home", root_path %><span class="divider">/</span></li>
+  <li><%= link_to @problem.name, @problem %><span class="divider">/</span></li>
+  <li class="active"><%= @solution.name %></li>
+</ul>
+
+  <h1><%= @solution.name %>&nbsp;<small><%= link_to "Edit", edit_solution_path(@solution) %></small>
   <% unless @solution.comment.blank? %>
-  <span id="header_comment">
-    <%= simple_format(@solution.comment) %>
-  </span>
+  <small><%= simple_format(@solution.comment) %></small>
   <% end %>
+  </h1>
+
+
 
   <% unless @solution.problem.questions.blank? %>
-      <%= form_for @solution, :url => {:action => 'answers'}, :method => :put do |f| %>
+      <%= form_for @solution, :url => {:action => 'answers'}, :html => {:class => "form-stacked"}, :method => :put do |f| %>
         <% unless @solution.problem.categories.blank? %>
            <% @solution.problem.categories.each do |category| %>
               <% unless @solution.answers_by_category_id(category.id).empty? %>
-                  <span class="category_header"><%= category.name %></span>&nbsp;<span class="round toggle_category" id="category_<%=category.id%>">Hide</span>
+                  <h3><%= category.name %>&nbsp;<span class="btn toggle-category" id="category_<%=category.id%>">Hide</span></h3>
                   <ul class="answers" id="answers_category_<%=category.id%>">
                       <%= f.fields_for :answers, @solution.answers_by_category_id(category.id).sort_by {|answer| answer.question.position} do |builder| %>
                         <%= render 'shared/error_messages', :object => builder.object %>
                         <%= render "answer_fields", :f => builder %>
-                        <hr/>
                       <% end %>
                   </ul>
-                  <hr/>
                   <div class="clear"></div>
               <% end %>
            <% end %>
         <% end %>
         <% unless @solution.answers_by_category_id(nil).blank? %>
-           <span class="category_header">Uncategorized</span>&nbsp;<span class="round toggle_category" id="category_none">Hide</span>
+           <h3>Uncategorized</span>&nbsp;<span class="btn toggle_category" id="category_none">Hide</span></h3>>
            <ul class="answers" id="answers_category_none">
                <%= f.fields_for :answers, @solution.answers_without_category.sort_by {|answer| answer.question.position} do |builder| %>
                   <%= render 'shared/error_messages', :object => builder.object %>
                   <%= render "answer_fields", :f => builder %>
-                  <hr/>
                 <% end %>
             </ul>
-            <hr/>
             <div class="clear"></div>
         <% end %>
-        <div class="actions">
-          <%= f.submit "Submit" %>
+        <div class="well">
+	        <%= f.submit "Update", :class => "btn large primary span2" %>
+            <%= link_to "Cancel", solution_path(@solution), :class => "btn large danger" %>
         </div>
       <% end %>
     <% if @answers.empty? %>
@@ -49,9 +48,8 @@
     <% end %>
   <% end %>
 
-
           <script type="text/javascript">
-            $('.<%= "toggle_category" %>').click(function() {
+            $('.<%= "toggle-category" %>').click(function() {
                 $("#answers_" + this.id).slideToggle('normal', function() {
                 // Animation complete.
                 var $header = $("#" + this.id.substring(8));

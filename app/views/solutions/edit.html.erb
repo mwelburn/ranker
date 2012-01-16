@@ -1,18 +1,25 @@
-<%= form_for @solution do |f| %>
+<ul class="breadcrumb">
+  <li><%= link_to "Home", root_path %><span class="divider">/</span></li>
+  <li><%= link_to @problem.name, @problem %><span class="divider">/</span></li>
+  <li><%= link_to @solution.name, @solution %><span class="divider">/</span></li>
+  <li class="active">Edit</li>
+</ul>
+
+<%= form_for @solution, :html => {:class => "form-stacked"} do |f| %>
   <h2>Edit solution</h2>
   <%= render 'shared/error_messages', :object => f.object %>
   <div class="field">
     <%= f.label :name %>
-	<%= f.text_field :name %>
+	<%= f.text_field :name, :class => "span6" %>
   </div>
   <div class="field">
     <%= f.label :comment %>
-	<%= f.text_area :comment %>
+	<%= f.text_area :comment, :class => "span6" %>
   </div>
   <%= f.hidden_field :problem_id, :value => @problem.id %>
-  <div class="actions">
-	<%= f.submit "Update" %>
+  <div class="well">
+	<%= f.submit "Update", :class => "btn large primary span2" %>
+    <%= link_to "Delete", solution_path(@solution), :class => "btn large danger", :confirm => "Are you sure?", :method => :delete %>
   </div>
-  <p><%= link_to "Delete", solution_path(@solution), :confirm => "Are you sure?", :method => :delete %></p>
 
 <% end %>

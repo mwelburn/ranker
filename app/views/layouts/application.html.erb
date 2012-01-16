@@ -22,6 +22,7 @@
 <body>
   <div class="container">
 	<%= render 'layouts/header' %>
+    <%= link_to logo, root_path %>
 	<section class="round">
 	  <% flash.each do |key, value| %>
 		<%= content_tag(:div, value, :class => "flash #{key}") %>

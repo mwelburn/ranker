@@ -1,24 +1,27 @@
-<li class="question" id="question_<%= f.object.id %>">
-  <div class="field">
+<li class="well question" id="question_<%= f.object.id %>">
+  <div class="left field">
     <%= f.label :text, "Question" %>
-    <%= f.text_area :text, :id => "question_text_#{f.object.id}" %>
+    <%= f.text_area :text, :id => "question_text_#{f.object.id}", :class => "span8 question_text" %>
   </div>
-  <div class="field">
-    <%= f.label :weight %>
-    <%= f.radio_button :weight, 1 %>1
-    <%= f.radio_button :weight, 2 %>2
-    <%= f.radio_button :weight, 3 %>3
-    <%= f.radio_button :weight, 4 %>4
-    <%= f.radio_button :weight, 5 %>5
+  <div class="right field">
+    <%= f.label :weight, :class => "weight" %>
+    <%= f.radio_button :weight, 1 %>&nbsp;1
+    <%= f.radio_button :weight, 2 %>&nbsp;2
+    <%= f.radio_button :weight, 3 %>&nbsp;3
+    <%= f.radio_button :weight, 4 %>&nbsp;4
+    <%= f.radio_button :weight, 5 %>&nbsp;5
   </div>
-  <div class="field">
+  <div class="clear"></div>
+  <div class="left field">
     <%= f.label :category_id %>
-    <%= f.select(:category_id, @problem.categories.collect {|p| [ p.name, p.id ] }, {:include_blank => ""}) %>
+    <%= f.select(:category_id, @problem.categories.collect {|p| [ p.name, p.id ] }, {:include_blank => ""}, {:class => "span8"}) %>
   </div>
+  <div class="right delete-question">
+    <div class="btn danger" id="delete_<%= f.object.id %>">Delete Question</div>
+  </div>
+  <div class="clear"></div>
   <%= f.hidden_field :position %>
   <%= f.hidden_field :_destroy, :id => "destroy_#{f.object.id}" %>
-  <%= f.link_to_remove "Delete" %>
-  <div class="clear"></div>
 </li>
 <script type="text/javascript">
   $(document).ready(function(){
@@ -26,5 +29,16 @@
      if ($("#destroy_<%= f.object.id %>").val() == "true") {
          $("#question_<%= f.object.id %>").hide();
      }
+
+     //set delete flag and hide
+     $("#delete_<%= f.object.id %>").click(function(){
+         var result = confirm("Are you sure you want to delete this question?");
+console.log(result)
+         if (result) {
+             $("#destroy_<%= f.object.id %>").val("true");
+             $("#question_<%= f.object.id %>").slideUp();
+         }
+     });
+     
   });
 </script>

@@ -1,39 +1,16 @@
-<li class="answer">
-  <div class="field">
-    <label><%= "#{f.object.question.text}" %></label>
+<li class="well answer">
+  <div class="left field">
+    <%= f.label :rating, f.object.question.text %>
+    <%= f.radio_button :rating, 1 %>&nbsp;1
+    <%= f.radio_button :rating, 2 %>&nbsp;2
+    <%= f.radio_button :rating, 3 %>&nbsp;3
+    <%= f.radio_button :rating, 4 %>&nbsp;4
+    <%= f.radio_button :rating, 5 %>&nbsp;5
   </div>
-  <div class="field">
-    <%= f.radio_button :rating, 1 %>1
-    <%= f.radio_button :rating, 2 %>2
-    <%= f.radio_button :rating, 3 %>3
-    <%= f.radio_button :rating, 4 %>4
-    <%= f.radio_button :rating, 5 %>5
-  </div>
-    <div id='<%= "comment_#{f.object.id}" %>' class="field answer_comment" <% if f.object.comment.blank? %>style="display:none"<% end %>>
-      <%= f.text_area :comment %>
-    </div>
-    <div id='<%= "toggle_comment_#{f.object.id}" %>' class="toggle_comment round">
-       <% if f.object.comment.blank? %>
-          Show Comment
-       <% else %>
-          Hide Comment
-       <% end %>
+    <div class="right field">
+      <%= f.label :comment %>
+      <%= f.text_area :comment, :id => "comment_#{f.object.id}", :class => "span6" %>
     </div>
   <%= f.hidden_field :question_id %>
   <div class="clear"></div>
 </li>
-
-  <script type="text/javascript">
-    $('#<%= "toggle_comment_#{f.object.id}" %>').click(function() {
-      $('#<%= "comment_#{f.object.id}" %>').slideToggle('normal', function() {
-        // Animation complete.
-        var $comment_span = $('#<%= "toggle_comment_#{f.object.id}" %>');
-
-        if ($comment_span.text().trim() == "Hide Comment") {
-          $comment_span.text("Show Comment");
-        } else {
-          $comment_span.text("Hide Comment");
-        }
-      });
-    });
-  </script>

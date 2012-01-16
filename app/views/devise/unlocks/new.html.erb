@@ -1,12 +1,21 @@
-<%= form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => { :method => :post }) do |f| %>
+<ul class="breadcrumb">
+  <li><%= link_to "Home", root_path %><span class="divider">/</span></li>
+  <li class="active">Unlock</li>
+</ul>
+
+<%= form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => { :class => "form-stacked", :method => :post }) do |f| %>
   <h2>Resend unlock instructions</h2>
 
   <%= devise_error_messages! %>
 
-  <div><%= f.label :email %>
-  <%= f.email_field :email %></div>
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+  </div>
 
-  <div><%= f.submit "Resend unlock instructions" %></div>
+  <div class="well">
+    <%= f.submit "Resend unlock instructions", :class => "btn primary" %>
+  </div>
 <% end %>
 
 <%= render :partial => "devise/shared/links" %>

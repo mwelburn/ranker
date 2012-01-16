@@ -30,9 +30,14 @@ gem 'devise', '1.4.5'
 gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git', :tag => 'v0.3.0.rc3'
 gem 'oa-oauth', :require => 'omniauth/oauth'
 
-gem 'nested_form', :git => 'git://github.com/ryanb/nested_form.git'
+#gem 'nested_form', :git => 'git://github.com/ryanb/nested_form.git'
 
-#gem 'will_paginate'
+#gem 'formtastic'
+#gem 'formtastic-bootstrap'
+
+group :assets do
+  gem 'bootstrap-sass'
+end
 
 group :development do
   gem 'sqlite3'

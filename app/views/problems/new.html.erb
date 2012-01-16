@@ -1,17 +1,23 @@
-<%= form_for @problem do |f| %>
+<ul class="breadcrumb">
+  <li><%= link_to "Home", root_path %><span class="divider">/</span></li>
+  <li class="active">New Problem</li>
+</ul>
+
+<%= form_for @problem, :html => {:class => "form-stacked"} do |f| %>
   <h2>New Problem</h2>
   <%= render 'shared/error_messages', :object => f.object %>
   <div class="field">
     <%= f.label :name %>
-	<%= f.text_field :name %>
+	<%= f.text_field :name, :class => "span6" %>
   </div>
   <div class="field">
     <%= f.label :comment %>
-	<%= f.text_area :comment %>
+	<%= f.text_area :comment, :class => "span6" %>
   </div>
   <%= f.hidden_field :is_template %>
   <%= f.hidden_field :template_id %>
-  <div class="actions">
-	<%= f.submit "Submit" %>
+  <div class="well">
+	<%= f.submit "Create", :class => "btn large primary span2" %>
+    <%= link_to "Cancel", root_path, :class => "btn large danger" %>
   </div>
 <% end %>

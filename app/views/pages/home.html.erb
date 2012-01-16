@@ -1,14 +1,18 @@
+<ul class="breadcrumb">
+  <li class="active">Home</li>
+</ul>
+
 <% if user_signed_in? %>
   <div class="main">
-    <%= link_to "New Problem?", new_problem_path, :class => "new_problem_button round left" %>
-    <%= link_to "Start with Residency template!", copy_problem_path(1), :class => "template_button round right" %>
+    <%= link_to "New Problem?", new_problem_path, :class => "btn right primary template-btn" %>
+    <%= link_to "Start with Residency template!", copy_problem_path(1), :class => "btn right success template-btn" %>
+    <div class="clear"></div>
     <%= render 'shared/problems' %>
     <div class="clear"></div>
   </div>
 <% else %>
-  <h1>Got a problem? Solve it.</h1>
-  <p>
-    Create a series of questions to help solve your problem by rating each possible solution.
-  </p>
-  <%= link_to "Sign up now!", new_user_registration_path, :class => "signup_button round" %>
+  <h1>Got a problem? Solve it.<br/>
+    <small>Create a series of questions to help solve your problem by rating each possible solution.</small>
+  </h1>
+  <%= link_to "Sign up now!", new_user_registration_path, :class => "btn large success" %>
 <% end %>

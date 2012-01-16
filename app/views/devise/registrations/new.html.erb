@@ -1,21 +1,36 @@
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+<ul class="breadcrumb">
+  <li><%= link_to "Home", root_path %><span class="divider">/</span></li>
+  <li class="active">Sign Up</li>
+</ul>
+
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => "form-stacked" }) do |f| %>
   <h2>Sign up</h2>
 
   <%= devise_error_messages! %>
 
-  <div><%= f.label :name %>
-  <%= f.text_field :name %></div>
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
 
-  <div><%= f.label :email %>
-  <%= f.email_field :email %></div>
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+  </div>
 
-  <div><%= f.label :password %>
-  <%= f.password_field :password %></div>
+  <div class="field">
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
 
-  <div><%= f.label :password_confirmation %>
-  <%= f.password_field :password_confirmation %></div>
+  <div class="field">
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
+  </div>
 
-  <div><%= f.submit "Sign up" %></div>
+  <div class="well">
+    <%= f.submit "Sign Up", :class => "btn primary" %>
+  </div>
 <% end %>
 
 <%= render :partial => "devise/shared/links" %>

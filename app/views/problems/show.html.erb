@@ -1,19 +1,52 @@
-Back to <%= link_to "Problems", root_path %>
+<ul class="breadcrumb">
+  <li><%= link_to "Home", root_path %><span class="divider">/</span></li>
+  <li class="active"><%= @problem.name %></li>
+</ul>
+
 <ul class="problems" summary="User problems">
     <%= render 'shared/problem_item', :problem_item => @problem %>
 </ul>
-<%= nested_form_for @problem, :url => {:action => 'questions'}, :method => :put do |f| %>
-    <ul id="questions">
-        <% unless @questions.empty? %>
-            <%= f.fields_for :questions do |builder| %>
-              <%= render 'shared/error_messages', :object => builder.object %>
-              <%= render "question_fields", :f => builder %>
-              <hr/>
+<ul>
+  <button id="toggle-question-list" class="btn" data-toggle="toggle">Show Questions</button>
+</ul>
+<div id="question-list">
+    <%= form_for @problem, :url => {:action => 'questions'}, :html => {:class => "form-stacked"}, :method => :put do |f| %>
+        <ul class="questions">
+            <% unless @questions.empty? %>
+                <%= f.fields_for :questions do |builder| %>
+                  <%= render 'shared/error_messages', :object => builder.object %>
+                  <%= render "question_fields", :f => builder %>
+                <% end %>
             <% end %>
-        <% end %>
-        <%= f.link_to_add "Add Question", :questions %>
-    </ul>
-    <div class="actions">
-      <%= f.submit "Submit" %>
-    </div>
-<% end %>
+            <%= add_child_link "Add Question", :questions %>
+            <%= new_child_fields_template f, :questions, :partial => "question_fields" %>
+        </ul>
+        <div class="well">
+            <%= f.submit "Submit", :class => "btn large primary span2" %>
+            <%= link_to "Cancel", problem_path(@problem), :class => "btn large danger" %>
+        </div>
+    <% end %>
+</div>
+
+<div id="jstemplates">
+  <%= yield :jstemplates %>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+     //begin by hiding questions
+     $("#question-list").hide();
+
+     //toggle whether shown
+     $("#toggle-question-list").click(function(){
+         if ($(this).html() == "Show Questions") {
+             $("#question-list").slideDown();
+             $(this).html("Hide Questions");
+         } else {
+             $("#question-list").slideUp();
+             $(this).html("Show Questions");
+         }
+     });
+
+  });
+</script>
