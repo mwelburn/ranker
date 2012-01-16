@@ -119,6 +119,7 @@ class Problem < ActiveRecord::Base
   end
 
   def questions_by_category_id(id)
+    puts "ID: #{id}"
     questions = self.questions.find_all_by_category_id(id)
     if (questions.blank?)
       []

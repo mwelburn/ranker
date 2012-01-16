@@ -16,11 +16,9 @@
             <% unless @problem.questions_by_category_id(category.id).empty? %>
                 <h3><%= category.name %>&nbsp;<span class="btn toggle-category" id="category_<%=category.id%>">Hide</span></h3>
                   <ul class="questions">
-                    <% unless @questions.empty? %>
-                        <%= f.fields_for :questions do |builder| %>
-                          <%= render 'shared/error_messages', :object => builder.object %>
-                          <%= render "question_fields", :f => builder %>
-                        <% end %>
+                    <%= f.fields_for :questions, @problem.questions_by_category_id(category.id) do |builder| %>
+                      <%= render 'shared/error_messages', :object => builder.object %>
+                      <%= render "question_fields", :f => builder %>
                     <% end %>
                     <%= add_child_link "Add Question", :questions, :category_id => category.id %>
                     <%= new_child_fields_template f, :questions, {:partial => "question_fields", :category_id => category.id} %>
@@ -28,10 +26,10 @@
             <% end %>
           <% end %>
         <% end %>
-        <% unless @problem.questions_by_category_id(nil).blank? %>
+        <% unless @problem.questions_without_category.blank? %>
            <h3>Uncategorized</span>&nbsp;<span class="btn toggle_category" id="category_none">Hide</span></h3>
            <ul class="questions" id="answers_category_none">
-               <%= f.fields_for :questions, @problem.questions_without_category.sort_by {|question| question.position} do |builder| %>
+               <%= f.fields_for :questions, @problem.questions_without_category do |builder| %>
                   <%= render 'shared/error_messages', :object => builder.object %>
                   <%= render "question_fields", :f => builder %>
                 <% end %>
