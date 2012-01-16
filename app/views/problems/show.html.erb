@@ -39,6 +39,17 @@
                 <%= new_child_fields_template f, :questions, {:partial => "question_fields", :category_id => nil} %>
             </ul>
         <% end %>
+        <% if @problem.questions.blank? %>
+           <h3>Uncategorized</span>&nbsp;<span class="btn toggle_category" id="category_none">Hide</span></h3>
+           <ul class="questions" id="answers_category_none">
+               <%= f.fields_for :questions, @problem.questions.build do |builder| %>
+                  <%= render 'shared/error_messages', :object => builder.object %>
+                  <%= render "question_fields", :f => builder %>
+                <% end %>
+                <%= add_child_link "Add Question", :questions, :category_id => nil %>
+                <%= new_child_fields_template f, :questions, {:partial => "question_fields", :category_id => nil} %>
+            </ul>
+        <% end %>
         <div class="well">
             <%= f.submit "Submit", :class => "btn large primary span2" %>
             <%= link_to "Cancel", problem_path(@problem), :class => "btn large danger" %>
