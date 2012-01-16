@@ -1,0 +1,224 @@
+body {
+    padding-top: 40px;
+}
+
+textarea {
+    height: 50px;
+}
+
+/* General positioning */
+
+.clear {
+	clear: both;
+	height: 0;
+	overflow: hidden;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.field {
+    margin: 5px;
+}
+
+.round {
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.well {
+    margin-top: 10px;
+}
+
+/* Problems */
+
+#problems li {
+    list-style: none;
+}
+
+.weight {
+    text-align: right;
+}
+
+ul.questions {
+    margin-left: 0px;
+}
+
+li.question {
+    padding: 5px;
+    margin-left: 0px;
+    margin-bottom: 10px;
+    list-style: none;
+}
+
+.delete-question {
+    margin-top: 25px;
+}
+
+ul.answers {
+    margin-left: 0px;
+}
+
+li.answer {
+    padding: 5px;
+    margin-left: 0px;
+    margin-bottom: 10px;
+    list-style: none;
+}
+
+.toggle-category {
+    vertical-align: top;
+}
+
+.template-btn {
+    margin-left: 5px;
+}
+
+.category-section {
+    border: 1px solid;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+/* OLD STYLES */
+
+a.signup_button {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  width: 190px;
+  color: #fff;
+  background: #006400;
+  font-size: 150%;
+  font-weight: bold;
+  padding: 20px;
+}
+
+a.signup_button:hover {
+  cursor: pointer;
+}
+
+.round {
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+.round_top {
+  -moz-border-radius: 10px 10px 0px 0px;
+  -webkit-border-radius: 10px 10px 0px 0px;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.round_bottom {
+  -moz-border-radius: 0px 0px 10px 10px;
+  -webkit-border-radius: 0px 0px 10px 10px;
+  border-radius: 0px 0px 10px 10px;
+}
+
+.field_with_errors {
+  margin-top: 10px;
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+.field_with_errors label {
+  color: #fff;
+}
+
+#error_explanation {
+  width: 400px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px -7px 0 -7px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#error_explanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 5px;
+}
+
+#error_explanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+ul.problems {
+  margin-top: 1em;
+}
+
+.problems li {
+  list-style: none;
+  margin-bottom: 20px;
+}
+
+.problems li div.problem {
+  background-color: #FF7D73;
+  border: 1px solid #000;
+}
+
+.problems li div.problem div.information {
+  margin-left: 25px;
+}
+
+.problems li div.solutions li {
+  margin-bottom: 0px;
+}
+
+.problems li div.solutions li.hide {
+  list-style: none;
+}
+
+.problem_solution {
+  margin-left: 100px;
+  margin-right: 25px;
+  border: 1px solid #000;
+  border-top: 0px;
+  background-color: #FFD373;
+}
+
+.problem_solution div.information {
+  padding: 5px;
+}
+
+.problem_solution span.ranking {
+
+}
+
+.problem_solution span.name {
+
+}
+
+.problem_solution span h3 {
+  display: inline;
+}
+
+.hide_solutions {
+  text-align: right;
+  padding: 0 25px;
+  background-color: #FFD373;
+}
+
+.hide_solutions:hover {
+  cursor: pointer;
+}
