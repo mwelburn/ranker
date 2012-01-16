@@ -36,7 +36,7 @@ gem 'oa-oauth', :require => 'omniauth/oauth'
 #gem 'formtastic-bootstrap'
 
 group :assets do
-  gem 'bootstrap-sass'
+  #gem 'bootstrap-sass'
 end
 
 group :development do
