@@ -12,6 +12,4 @@
 //= require bootstrap/bootstrap-modal
 //= require bootstrap/bootstrap-popover
 //= require bootstrap/bootstrap-scrollspy
-//= require bootstrap/bootstrap-tabs
-//= require bootstrap/bootstrap-twipsy
 //= require_tree .
