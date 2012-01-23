@@ -48,14 +48,12 @@ textarea {
     width: 100%;
     min-width: 940px;
     padding: 30px 0;
+}
+
+.footer div {
     text-align: center;
 }
 
-.footer li {
-    list-style: none;
-    display: inline-block;
-    padding: 0 10px;
-}
 
 /* Problems */
 
