@@ -10,6 +10,5 @@
 //= require bootstrap/bootstrap-buttons
 //= require bootstrap/bootstrap-dropdown
 //= require bootstrap/bootstrap-modal
-//= require bootstrap/bootstrap-popover
 //= require bootstrap/bootstrap-scrollspy
 //= require_tree .
