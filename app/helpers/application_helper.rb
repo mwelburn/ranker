@@ -1,7 +1,7 @@
 module ApplicationHelper
 
   def title
-    base_title = "Ranker"
+    base_title = "Residency Ranker"
     if @title.nil?
       base_title
     else
@@ -10,7 +10,7 @@ module ApplicationHelper
   end
   
   def logo
-    image_tag("logo.png", :alt => "Ranker", :class => "round")
+    image_tag("logo.png", :alt => "Residency Ranker", :class => "round")
   end
 
 end
