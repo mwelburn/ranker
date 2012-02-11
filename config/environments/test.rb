@@ -38,4 +38,7 @@ Ranker::Application.configure do
   config.active_support.deprecation = :stderr
 
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+
+  config.oauth.facebook.options = { :APP_ID => '198633203509595',
+                                    :APP_SECRET => '8125d8419c218d2f8c09a939d551a42b' }
 end
