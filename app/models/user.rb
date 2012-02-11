@@ -6,7 +6,8 @@ class User < ActiveRecord::Base
          :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me
+  #TODO - should facebook_id be modifiable at all after initial creation?
+  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :facebook_id
 
   validates :name, :presence => true,
                    :length => { :maximum => 50 }
@@ -18,14 +19,11 @@ class User < ActiveRecord::Base
 
   def self.find_for_facebook_oauth(access_token, signed_in_resource=nil)
     data = access_token.extra.raw_info
-    if user = User.where(:email => data.email).first
+    if user = User.where(:facebook_id => data.id).first
+      #TODO - update the email/name if they have changed. need to verify that there isn't an existing email being used
       user
     else # Create a user with a stub password.
-      name = data.first_name
-      if data.last_name
-        name += ' ' + data.last_name
-      end
-      User.create!(:email => data.email, :name => name, :password => Devise.friendly_token[0,20])
+      User.create!(:email => data.email, :name => data.name, :facebook_id => data.id, :password => Devise.friendly_token[0,20])
     end
   end
 
