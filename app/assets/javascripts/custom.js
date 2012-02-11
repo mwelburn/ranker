@@ -19,4 +19,10 @@ $(function() {
     $(this).parents('.fields').hide();
     return false;
   });
+
+  // Find ALL <form> tags on your page
+  $('form').submit(function(){
+    // On submit disable its submit button
+    $('input[type=submit]', this).attr('disabled', 'disabled');
+  });
 });
