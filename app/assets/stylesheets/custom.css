@@ -105,6 +105,18 @@ li.answer {
     margin: 10px 0;
 }
 
+.facebook-login {
+    vertical-align: middle;
+    display: inline-block;
+    width: 150px;
+    height: 23px;
+    background: url('facebook_signin.png') no-repeat top;
+}
+
+.facebook-login:active {
+    background: url('facebook_signin.png') no-repeat bottom;
+}
+
 /* OLD STYLES */
 
 a.signup_button {

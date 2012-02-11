@@ -26,9 +26,8 @@ gem 'jquery-rails'
 
 # To use debugger
 
-gem 'devise', '1.4.5'
-gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git', :tag => 'v0.3.0.rc3'
-gem 'oa-oauth', :require => 'omniauth/oauth'
+gem 'devise', '1.5'
+gem 'omniauth-facebook'
 
 #gem 'nested_form', :git => 'git://github.com/ryanb/nested_form.git'
 
